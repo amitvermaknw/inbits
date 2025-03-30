@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/src/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/src/components/ui/sheet";
 import { Menu, X } from "lucide-react";
-import { DialogTitle } from "@/components/ui/dialog";
+import { DialogTitle } from "@/src/components/ui/dialog";
 import Link from "next/link";
 
 export default function Header() {
