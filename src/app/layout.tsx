@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/src/components/layout/Header";
 import BottomNav from "@/src/components/nav/BottomNav";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,8 +31,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header />
-        {children}
-
+        <div className='md:container md:mx-auto'>
+          {children}
+        </div>
         <BottomNav />
       </body>
     </html>
