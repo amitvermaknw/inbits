@@ -14,7 +14,7 @@ export default function BottomNav() {
     ];
 
     return (
-        <nav className="fixed bottom-0 left-0 w-full bg-neutral-100 dark:bg-neutral-900 border-t border-neutral-300 dark:border-neutral-700 shadow-md md:hidden">
+        <nav className="fixed bottom-0 left-0 w-full bg-neutral-100 dark:bg-neutral-900 border-t border-neutral-300 dark:border-neutral-700 shadow-md md:hidden z-50">
             <div className="flex justify-around py-3">
                 {navItems.map((item) => (
                     <Link key={item.href} href={item.href} className="flex flex-col items-center">

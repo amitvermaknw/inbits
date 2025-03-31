@@ -1,8 +1,6 @@
 'use client'
 import React from "react";
 import Image from "next/image";
-import { cn } from "@/src/lib/utils";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card";
 import { Skeleton } from "@/src/components/ui/skeleton";
 
 interface NewsItem {
@@ -35,13 +33,9 @@ const latest: NewsListProps = {
     className: "mt-2"
 }
 
-const onClick = () => {
-    console.log("test")
-}
-
 export default function LatestNews() {
     return (
-        latest.news ? <section className="py-4 mb-4">
+        latest.news ? <section className="py-4 mb-2">
             <h1 className="mb-4 ml-2 text-left font-sans  font-bold text-sm md:text-md xl:text-xl">Latest</h1>
             <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 ml-2 mr-2">
                 {latest.news.map((item: NewsItem, index: number) => {
@@ -54,7 +48,7 @@ export default function LatestNews() {
                                     width={50}
                                     height={50}
                                     objectFit="cover"
-                                    className="object-cover rounded-t-lg rounded-b-lg w-20 h-22 md:h-auto md:w-56 mb-4"
+                                    className="object-cover rounded-t-lg rounded-b-lg w-20 h-22 mb-4"
                                 />
                                 {/* <img className="object-cover rounded-t-lg rounded-b-lg w-20 h-22 md:h-auto md:w-56" src={item.imageUrl} alt="" /> */}
                             </div>
