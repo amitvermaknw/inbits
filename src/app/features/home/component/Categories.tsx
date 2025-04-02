@@ -40,14 +40,18 @@ export default function CategoryMenu() {
                         href={category.link}
                         className="block"
                     >
-                        <Card className="shadow-lg w-48 md:w-48 transition-transform duration-300 hover:scale-105">
+                        <Card className="shadow-lg w-42 md:w-48 transition-transform duration-300 hover:scale-105">
                             {/* <CardHeader className="flex flex-row items-center space-x-3"> */}
-                            {/* {category.icon} */}
+
                             {/* <CardTitle>{category.title}</CardTitle> */}
                             {/* <p className="text-gray-600 mb-4 text-sm">{category.description}</p> */}
                             {/* </CardHeader> */}
                             <CardContent>
-                                <p className="text-gray-600 text-sm ml-4">{category.title}</p>
+                                <div className="flex">
+                                    {category.icon}
+                                    <p className="text-gray-600 text-sm ml-4">{category.title}</p>
+                                </div>
+
                                 {/* <div className="flex justify-between space-x-2">
                                     <Button variant="outline">View</Button>
                                     <Button>Subscribe</Button>

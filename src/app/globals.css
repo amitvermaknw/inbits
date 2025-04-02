@@ -3,6 +3,7 @@
 @import "swiper/css";
 @import "swiper/css/navigation";
 @import "swiper/css/pagination";
+@import "swiper/css/effect-cards";
 
 :root {
   --background: oklch(1 0 0);

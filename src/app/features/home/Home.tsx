@@ -12,7 +12,7 @@ export default function HomePage() {
             <TopStories />
             <LatestNews />
             <div className="w-full h-full md:flex">
-                <div className="flex-shrink-0 ml-1">
+                <div className="flex-shrink-0 m-2 p-2 mr-4">
                     <CategoryMenu />
                 </div>
                 <div className="flex-1 min-w-0 ms-2 p-2">

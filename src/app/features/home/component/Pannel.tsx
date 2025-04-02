@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Pagination, EffectCards } from 'swiper/modules';
 import Image from "next/image";
 import style from "../css/Pannel.module.css";
 
 export default function Pannel() {
     return (
         <section className="py-2 mb-4">
-            <Swiper
+            {/* <Swiper
                 effect={'coverflow'}
                 grabCursor={true}
                 centeredSlides={true}
@@ -55,36 +55,24 @@ export default function Pannel() {
                         className="object-cover rounded-t-lg rounded-b-lg mb-4"
                     />
                 </SwiperSlide>
-                {/* <SwiperSlide>
-                    <Image
-                        src="https://swiperjs.com/demos/images/nature-4.jpg"
-                        alt="panel"
-                        width={300}
-                        height={300}
-                        objectFit="cover"
-                        className="object-cover rounded-t-lg rounded-b-lg mb-4"
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <Image
-                        src="https://swiperjs.com/demos/images/nature-5.jpg"
-                        alt="panel"
-                        width={300}
-                        height={300}
-                        objectFit="cover"
-                        className="object-cover rounded-t-lg rounded-b-lg mb-4"
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <Image
-                        src="https://swiperjs.com/demos/images/nature-6.jpg"
-                        alt="panel"
-                        width={300}
-                        height={300}
-                        objectFit="cover"
-                        className="object-cover rounded-t-lg rounded-b-lg mb-4"
-                    />
-                </SwiperSlide> */}
+            </Swiper> */}
+
+            <Swiper
+                effect={'cards'}
+                grabCursor={true}
+                modules={[EffectCards]}
+                className={style.swiper}
+            >
+                <SwiperSlide className={`${style.swiperslide} ${style.firstswiperslide}`}>Slide 1</SwiperSlide>
+                <SwiperSlide className={`${style.swiperslide} ${style.secondswiperslide}`}>Slide 2</SwiperSlide>
+                <SwiperSlide className={`${style.swiperslide} ${style.thirdswiperslide}`}>Slide 3</SwiperSlide>
+                <SwiperSlide className={`${style.swiperslide} ${style.fourthswiperslide}`}>Slide 4</SwiperSlide>
+                {/* <SwiperSlide>Slide 4</SwiperSlide>
+                <SwiperSlide>Slide 5</SwiperSlide>
+                <SwiperSlide>Slide 6</SwiperSlide>
+                <SwiperSlide>Slide 7</SwiperSlide>
+                <SwiperSlide>Slide 8</SwiperSlide>
+                <SwiperSlide>Slide 9</SwiperSlide> */}
             </Swiper>
         </section>
     );
