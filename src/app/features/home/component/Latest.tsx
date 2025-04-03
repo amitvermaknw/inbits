@@ -35,7 +35,7 @@ const latest: NewsListProps = {
 
 export default function LatestNews() {
     return (
-        latest.news ? <section className="py-4 mb-2">
+        latest.news ? <section className="py-4">
             <h1 className="mb-4 ml-2 text-left font-sans  font-bold text-sm md:text-md xl:text-xl">Latest</h1>
             <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 ml-2 mr-2">
                 {latest.news.map((item: NewsItem, index: number) => {

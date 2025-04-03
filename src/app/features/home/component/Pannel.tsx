@@ -8,7 +8,7 @@ import style from "../css/Pannel.module.css";
 
 export default function Pannel() {
     return (
-        <section className="py-2 mb-4">
+        <div className="py-2 mb-4">
             {/* <Swiper
                 effect={'coverflow'}
                 grabCursor={true}
@@ -74,6 +74,6 @@ export default function Pannel() {
                 <SwiperSlide>Slide 8</SwiperSlide>
                 <SwiperSlide>Slide 9</SwiperSlide> */}
             </Swiper>
-        </section>
+        </div>
     );
 }
