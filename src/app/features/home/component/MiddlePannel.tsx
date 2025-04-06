@@ -37,9 +37,9 @@ const latest: NewsListProps = {
 
 export default function MiddlePannel() {
     return (
-        latest.news ? <section className="py-4 border-b-1 md:border-b-0 mb-4">
+        latest.news ? <section className="pb-8 border-b-1 lg:border-b-0 mb-8">
             {/* <h1 className="mb-4 ml-2 text-left font-sans  font-bold text-sm md:text-md xl:text-xl">World</h1> */}
-            <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 ml-2 mr-2">
+            <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 mr-2">
                 {latest.news.map((item: NewsItem, index: number) => {
                     return <article className="col-span-1 m-auto min-h-full min-w-full  cursor-pointer overflow-hidden rounded-lg pb-2 shadow-lg transition-transform duration-200 hover:translate-y-2" key={`${item.title}_${index}`}>
                         <a href={`/pdetails/${item.imageUrl ? item.imageUrl : item.imageUrl}`} className="block w-full h-full">

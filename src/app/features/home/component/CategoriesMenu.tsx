@@ -32,15 +32,15 @@ const categories = [
 
 export default function CategoryMenu() {
     return (
-        <div className="flex justify-center items-center mb-4">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <section className="flex items-center mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {categories.map((category) => (
                     <Link
                         key={category.title}
                         href={category.link}
                         className="block"
                     >
-                        <Card className="shadow-lg w-42 md:w-48 transition-transform duration-300 hover:scale-105">
+                        <Card className="shadow-lg w-42 md:w-42 transition-transform duration-300 hover:scale-105">
                             {/* <CardHeader className="flex flex-row items-center space-x-3"> */}
 
                             {/* <CardTitle>{category.title}</CardTitle> */}
@@ -61,6 +61,6 @@ export default function CategoryMenu() {
                     </Link>
                 ))}
             </div>
-        </div>
+        </section>
     );
 }
