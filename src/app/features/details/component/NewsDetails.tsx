@@ -4,7 +4,7 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Skeleton } from "@/src/components/ui/skeleton";
 import Image from 'next/image';
-import { Mousewheel, Pagination, Autoplay, Navigation } from 'swiper/modules';
+import { Mousewheel, Navigation } from 'swiper/modules';
 import style from '../css/News.module.css';
 
 interface NewsItem {
@@ -85,7 +85,7 @@ export default function NewsDetails() {
                         </SwiperSlide>
                     })}
                 </Swiper>
-                <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-700 animate-bounce z-50">
+                <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-700 animate-bounce z-50 md:hidden">
                     <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
                     </svg>
