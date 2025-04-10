@@ -1,41 +1,59 @@
-import type { NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 // import { DocumentData, QueryDocumentSnapshot, QuerySnapshot } from "firebase-admin/firestore";
 import { db } from '../config/firebaseAdmin';
 import axios, { AxiosResponse } from 'axios';
+import { summarized } from '../../summarize/route';
 
-const docPath = "streetdeals_collection/streetdeals/banner_details";
+const docPath = "inbits_collection/newsdata/articles";
 // let lastVisibleData: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined;
 
-export async function GET(req: Request, res: NextApiResponse) {
+interface Article {
+    source: { id: string, name: string },
+    author: string,
+    title: string,
+    description: string,
+    url: string,
+    urlToImage: string,
+    publishedAt: string,
+    content: string
+}
+
+export async function GET(req: Request) {
 
     const url = new URL(req.url);
     const secret = url.searchParams.get('secret');
 
     if (secret !== process.env.CRON_SECRET) {
-        return res.status(401).json({ message: 'Unauthorized' });
+        return NextResponse.json({ message: 'Unauthorized', code: 401 }, { status: 401 });
     }
 
     try {
-        const result: AxiosResponse<[]> = await axios.get<[]>(`${process.env.NEWDATA_END_POINT}/v2/top-headlines?country=us&apiKey=${process.env.NEWDATA_API_KEY}`);
-        if (result.status === 200) {
-            const articles = result.data as Array<unknown>
-            const batchPromises = articles.map(async (article: any) => {
-                const snapshot = await db.collection(docPath).add(article);
-                if (snapshot.id) {
-                    res.status(200).send({ msg: "Article added successfully" });
-                } else {
-                    res.status(400).send({ msg: "Error while add transaction" });
-                }
-            });
+        // const result: AxiosResponse<[]> = await axios.get<[]>(`${process.env.NEWDATA_END_POINT}/v2/top-headlines?country=us&apiKey=${process.env.NEWDATA_API_KEY}`);
+        // if (result.status === 200) {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const results = require("./newdata.json");
+        // const articles = result.data as Array<unknown>
+        const batchPromises = results.articles.map(async (article: Article) => {
 
-            await Promise.all(batchPromises);
+            // const summary = await summarized(article.content);
+            // Object.assign(article, { summary: summary });
 
-            res.status(200).json({ message: 'Articles saved to Firebase', count: articles.length });
-        } else {
-            res.status(400).json({ message: 'Failed to save article response', count: 0 });
-        }
+            const snapshot = await db.collection(docPath).add(article);
+            if (snapshot.id) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        await Promise.all(batchPromises);
+        return NextResponse.json({ message: 'Articles saved to Firebase', count: results.articles.length, code: 200 }, { status: 200 });
+        // } else {
+        //     res.status(400).json({ message: 'Failed to save article response', count: 0 });
+        // }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error fetching or saving articles' });
+        if (error instanceof Error)
+            return NextResponse.json({ message: error.message, code: 500 }, { status: 500 });
     }
 }
