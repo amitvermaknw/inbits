@@ -34,15 +34,15 @@ export async function GET(req: Request) {
         const results = require("./newdata.json");
         // const articles = result.data as Array<unknown>
         const batchPromises = results.articles.map(async (article: Article) => {
-
-            // const summary = await summarized(article.content);
-            // Object.assign(article, { summary: summary });
-
-            const snapshot = await db.collection(docPath).add(article);
-            if (snapshot.id) {
-                return true;
-            } else {
-                return false;
+            if (article.content) {
+                // const summary = await summarized(article.content);
+                // Object.assign(article, { summary: summary });
+                const snapshot = await db.collection(docPath).add(article);
+                if (snapshot.id) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         });
 

@@ -16,8 +16,7 @@ export async function summarized(articleText: string) {
             messages: [
                 {
                     role: 'system',
-                    content:
-                        'You are a professional news summarizer. Summarize the following news article into a single concise paragraph that retains the full meaning and completeness of the article. Make it concise, factual, and preserve the key meaning of the article. Avoid opinions or conclusions. Use clear language.',
+                    content: `You are a professional news summarizer. Summarize the following news article into a single concise paragraph that retains the full meaning and completeness of the article. Avoid bullet points, personal opinions, or analysis. Use clear language. Focus strictly on the core facts and events using a neutral tone and journalistic style. After the summary, provide a single-word or short-phrase label for the category the article belongs to, such as Politics, Business, Technology, Entertainment, Health, Science, Sports, or World as seperate parameter, not in same message`,
                 },
                 {
                     role: 'user',
@@ -28,7 +27,7 @@ export async function summarized(articleText: string) {
         });
 
         const summary = completion.choices[0].message.content;
-        return NextResponse.json({ summary });
+        return summary;
     } catch (err) {
         if (err instanceof Error) {
             return NextResponse.json({ error: err.message }, { status: 500 });
