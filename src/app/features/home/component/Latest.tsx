@@ -1,7 +1,10 @@
 'use client'
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { Skeleton } from "@/src/components/ui/skeleton";
+import useGetLatest from "../hooks/useGetLatest";
+import LatestNewsModel from "@/src/models/LatestNewsModel";
+import { Article } from "@/src/interface/article";
 
 interface NewsItem {
     title: string;
@@ -33,18 +36,29 @@ const latest: NewsListProps = {
     className: "mt-2"
 }
 
+
 export default function LatestNews() {
+    const [pstate, fetchNews] = useGetLatest(LatestNewsModel);
+
+    useEffect(() => {
+        fetchNews('start', 5);
+    }, []);
+
+    const getNews = (callType: string, record: number) => {
+        fetchNews(callType, record);
+    }
+
     return (
-        latest.news ? <section className="py-4">
+        pstate ? <section className="py-4">
             <h1 className="mb-4 ml-2 text-left font-sans  font-bold text-sm md:text-md xl:text-xl">Latest</h1>
             <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 ml-2 mr-2">
-                {latest.news.map((item: NewsItem, index: number) => {
+                {pstate.map((item: Article, index: number) => {
                     return <article className="w-full h-full" key={`${item.title}_${index}`}>
-                        <a href={`/pdetails/${item.imageUrl ? item.imageUrl : item.imageUrl}`} className="flex items-center bg-white border-b border-gray-200 h-full">
+                        <a href={`/pdetails/${item.urlToImage ? item.urlToImage : item.urlToImage}`} className="flex items-center bg-white border-b border-gray-200 h-full">
                             <div className="flex-shrink-0 ml-1">
                                 <Image
-                                    src={item.imageUrl}
-                                    alt={item.imageAlt}
+                                    src={item.urlToImage}
+                                    alt={item.urlToImage}
                                     width={50}
                                     height={50}
                                     objectFit="cover"
@@ -53,7 +67,7 @@ export default function LatestNews() {
                                 {/* <img className="object-cover rounded-t-lg rounded-b-lg w-20 h-22 md:h-auto md:w-56" src={item.imageUrl} alt="" /> */}
                             </div>
                             <div className="flex-1 min-w-0 ms-2 p-2">
-                                <div className="text-gray-900 text-sm mb-2">{item.description}</div>
+                                <div className="text-gray-900 text-sm mb-2">{item.summary?.summary}</div>
                                 {/* <p className="text-gray-700 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla!</p> */}
                                 <div className="flex flex-wrap gap-3 mt-2">
                                     {/* {item.preprice ? <p className="text-gray-400 text-sm"><del>${item.preprice}</del></p> : ''} */}

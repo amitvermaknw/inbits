@@ -3,7 +3,12 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ['picsum.photos', 'swiperjs.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**', // This allows any hostname
+      },
+    ],
   }
 };
 

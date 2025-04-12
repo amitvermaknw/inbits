@@ -1,0 +1,1 @@
+export const GET_LATEST_NEWS = 'getlatestnews';

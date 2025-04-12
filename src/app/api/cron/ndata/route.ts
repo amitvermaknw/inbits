@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 // import { DocumentData, QueryDocumentSnapshot, QuerySnapshot } from "firebase-admin/firestore";
-import { db } from '../config/firebaseAdmin';
-import axios, { AxiosResponse } from 'axios';
-import { summarized } from '../../summarize';
+import { db } from '../../config/firebaseAdmin';
+// import axios, { AxiosResponse } from 'axios';
+// import { summarized } from '../../summarize';
 
 const docPath = "inbits_collection/newsdata/articles";
 // let lastVisibleData: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined;
