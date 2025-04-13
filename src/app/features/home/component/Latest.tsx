@@ -67,7 +67,7 @@ export default function LatestNews() {
                                 {/* <img className="object-cover rounded-t-lg rounded-b-lg w-20 h-22 md:h-auto md:w-56" src={item.imageUrl} alt="" /> */}
                             </div>
                             <div className="flex-1 min-w-0 ms-2 p-2">
-                                <div className="text-gray-900 text-sm mb-2">{item.summary?.summary}</div>
+                                <div className="text-gray-900 text-sm mb-2">{item.title}</div>
                                 {/* <p className="text-gray-700 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla!</p> */}
                                 <div className="flex flex-wrap gap-3 mt-2">
                                     {/* {item.preprice ? <p className="text-gray-400 text-sm"><del>${item.preprice}</del></p> : ''} */}
