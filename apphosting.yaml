@@ -1,9 +1,4 @@
 env:
-  - variable: NEWSAPI_END_POINT
-    secret: NEWSAPI_END_POINT
-    availability:
-      - BUILD
-      - RUNTIME
   - variable: NEWSAPI_API_KEY
     secret: NEWSAPI_API_KEY
     availability:
