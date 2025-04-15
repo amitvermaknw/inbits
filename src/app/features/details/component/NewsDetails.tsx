@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Skeleton } from "@/src/components/ui/skeleton";
+// import { Skeleton } from "@/src/components/ui/skeleton";
 import Image from 'next/image';
 import { Mousewheel, Navigation } from 'swiper/modules';
 import style from '../css/News.module.css';

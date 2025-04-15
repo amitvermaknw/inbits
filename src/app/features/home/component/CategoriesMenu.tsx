@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
+import { Card, CardContent } from "@/src/components/ui/card";
 import { Newspaper, Shield, Clapperboard } from "lucide-react";
-import { Button } from "@/src/components/ui/button";
+// import { Button } from "@/src/components/ui/button";
 import Link from "next/link";
 
 const categories = [

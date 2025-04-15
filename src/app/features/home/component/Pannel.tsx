@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination, EffectCards } from 'swiper/modules';
-import Image from "next/image";
+import { EffectCards } from 'swiper/modules';
 import style from "../css/Pannel.module.css";
 
 export default function Pannel() {

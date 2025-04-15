@@ -1,10 +1,10 @@
 'use client'
 import React from "react";
 import Image from "next/image";
-import { cn } from "@/src/lib/utils";
+// import { cn } from "@/src/lib/utils";
 import { Card, CardContent, CardTitle } from "@/src/components/ui/card";
 import { Skeleton } from "@/src/components/ui/skeleton";
-import { Button } from "@/src/components/ui/button";
+// import { Button } from "@/src/components/ui/button";
 
 interface NewsItem {
     title: string;

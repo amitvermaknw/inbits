@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
-import { Newspaper, Shield, Clapperboard } from "lucide-react";
-import { Button } from "@/src/components/ui/button";
-import Link from "next/link";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
+// import { Newspaper, Shield, Clapperboard } from "lucide-react";
+// import { Button } from "@/src/components/ui/button";
+// import Link from "next/link";
 import { Skeleton } from "@/src/components/ui/skeleton";
 import Image from 'next/image';
 
