@@ -6,37 +6,6 @@ import useGetLatest from "../hooks/useGetLatest";
 import LatestNewsModel from "@/src/models/LatestNewsModel";
 import { Article } from "@/src/interface/article";
 
-interface NewsItem {
-    title: string;
-    description?: string;
-    imageUrl: string;
-    imageAlt: string;
-    className?: string;
-}
-
-interface NewsListProps {
-    news: NewsItem[];
-    className?: string;
-}
-
-const latest: NewsListProps = {
-    news: [{
-        title: "latest",
-        description: "This error message is a fundamental aspect of how Next.js's App Router and React Server Components (RSCs) work.",
-        imageUrl: "https://picsum.photos/id/1/200/300",
-        imageAlt: "latest"
-    },
-    {
-        title: "latest",
-        description: "This error message is a fundamental aspect of how Next.js's App Router and React Server Components (RSCs) work.",
-        imageUrl: "https://picsum.photos/id/1/200/300",
-        imageAlt: "latest"
-    }
-    ],
-    className: "mt-2"
-}
-
-
 export default function LatestNews() {
     const [pstate, fetchNews] = useGetLatest(LatestNewsModel);
 
@@ -44,9 +13,9 @@ export default function LatestNews() {
         fetchNews('start', 5);
     }, []);
 
-    const getNews = (callType: string, record: number) => {
-        fetchNews(callType, record);
-    }
+    // const getNews = (callType: string, record: number) => {
+    //     fetchNews(callType, record);
+    // }
 
     return (
         pstate ? <section className="py-4">

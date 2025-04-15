@@ -4,6 +4,7 @@ import { db } from '../../config/firebaseAdmin';
 import axios, { AxiosResponse } from 'axios';
 import { summarized } from '../../summarize';
 import { fetchArticleContent } from '../content/readContent';
+import { NEWSAPI_END_POINT } from '@/src/utils/contants';
 
 const docPath = "inbits_collection/newsapi/articles";
 // let lastVisibleData: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined;
@@ -29,7 +30,7 @@ export async function GET(req: Request) {
     }
 
     try {
-        const result: AxiosResponse<[]> = await axios.get<[]>(`${process.env.NEWSAPI_END_POINT}/v2/top-headlines?country=us&category=politics&category=sports&category=business&category=entertainment&category=technology&apiKey=${process.env.NEWSAPI_API_KEY}`);
+        const result: AxiosResponse<[]> = await axios.get<[]>(`${NEWSAPI_END_POINT}/v2/top-headlines?country=us&category=politics&category=sports&category=business&category=entertainment&category=technology&apiKey=${process.env.NEWSAPI_API_KEY}`);
         if (result.status === 200) {
             // const results = require("./newdata.json");
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
