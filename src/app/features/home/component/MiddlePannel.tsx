@@ -37,25 +37,24 @@ const latest: NewsListProps = {
 
 export default function MiddlePannel() {
     return (
-        latest.news ? <section className="pb-8 border-b-1 lg:border-b-0 mb-8">
-            {/* <h1 className="mb-4 ml-2 text-left font-sans  font-bold text-sm md:text-md xl:text-xl">World</h1> */}
-            <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 mr-2">
+        latest.news ? <section className="md:py-4">
+            <h1 className="p-2 mb-2 text-left font-sans  font-bold text-sm md:text-md xl:text-xl">Others</h1>
+            <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
                 {latest.news.map((item: NewsItem, index: number) => {
                     return <article className="col-span-1 m-auto min-h-full min-w-full  cursor-pointer overflow-hidden rounded-lg pb-2 shadow-lg transition-transform duration-200 hover:translate-y-2" key={`${item.title}_${index}`}>
                         <a href={`/pdetails/${item.imageUrl ? item.imageUrl : item.imageUrl}`} className="block w-full h-full">
-                            <div className="flex-shrink-0 ml-1">
+                            <div className="flex-shrink-0">
                                 <Image
                                     src={item.imageUrl}
                                     alt={item.imageAlt}
                                     width={50}
                                     height={50}
                                     objectFit="cover"
-                                    className="object-cover rounded-t-lg rounded-b-lg h-22 max-h-40 w-full"
+                                    className="object-cover rounded-t-lg rounded-b-lg h-35 max-h-40 w-full"
                                 />
-                                {/* <img className="object-cover rounded-t-lg rounded-b-lg w-20 h-22 md:h-auto md:w-56" src={item.imageUrl} alt="" /> */}
                             </div>
                             <div className="flex-1 min-w-0 ms-2 mt-2">
-                                <div className="text-gray-900 text-sm mb-2">{item.description}</div>
+                                <div className="text-gray-900 font-normal mb-2">{item.description}</div>
                             </div>
                         </a>
                     </article>
