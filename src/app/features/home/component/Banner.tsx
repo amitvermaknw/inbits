@@ -44,7 +44,7 @@ const Banner = (props: ArticleProps) => {
 
 
     return (
-        <section className="mx-auto grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+        <section className="mx-auto grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 py-2">
             <div className="sm:col-span-2 px-2">
                 <div className="mx-auto grid md:grid-cols-1 sm:grid-cols-2"> {/* Added mt-4 for margin top */}
                     <Swiper

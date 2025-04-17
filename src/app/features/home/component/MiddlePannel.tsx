@@ -2,12 +2,12 @@ import { Skeleton } from "@/src/components/ui/skeleton";
 import { Article } from "@/src/interface/article";
 import Image from 'next/image';
 
-export default function MiddlePannel(props: Array<Article>) {
+export default function MiddlePannel(props: { art: Array<Article> }) {
     return (
-        props.length ? <section className="md:py-4">
+        props.art.length ? <section className="md:py-4">
             <h1 className="p-2 mb-2 text-left font-sans font-bold md:text-md xl:text-xl">Others</h1>
             <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
-                {props.map((item: Article, index: number) => {
+                {props.art.map((item: Article, index: number) => {
                     return <article className="col-span-1 m-auto min-h-full min-w-full  cursor-pointer overflow-hidden rounded-lg pb-2 shadow-lg transition-transform duration-200 hover:translate-y-2" key={`${item.title}_${index}`}>
                         <a href={`/pdetails/${item.urlToImage ? item.urlToImage : item.urlToImage}`} className="block w-full h-full">
                             <div className="flex-shrink-0">

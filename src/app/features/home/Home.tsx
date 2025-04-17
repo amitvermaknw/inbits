@@ -32,12 +32,50 @@ const getSideArticle = (props: ArticleProps): Array<Article> => {
     return sideArticle
 }
 
+const getLatestArticle = (props: ArticleProps): Array<Article> => {
+
+    const latestArticle: Array<Article> = [];
+
+    if (typeof props === 'object' && props.hasOwnProperty("politics")) {
+        if (Array.isArray(props.politics)) {
+            const validArticles = props.politics.slice(0, props.politics.length - 1).filter(Boolean); //4
+            latestArticle.push(...validArticles);
+        }
+    }
+    if (typeof props === 'object' && props.hasOwnProperty("sports")) {
+        if (Array.isArray(props.sports)) {
+            const validArticles = props.sports.slice(0, props.sports.length - 1).filter(Boolean); //3
+            latestArticle.push(...validArticles);
+        }
+    }
+
+    if (typeof props === 'object' && props.hasOwnProperty("entertainment")) {
+        if (Array.isArray(props.entertainment)) {
+            const validArticles = props.entertainment.slice(0, props.entertainment.length - 1).filter(Boolean); //2
+            latestArticle.push(...validArticles);
+        }
+    }
+
+    if (typeof props === 'object' && props.hasOwnProperty("technology")) {
+        if (Array.isArray(props.technology)) {
+            const validArticles = props.technology.slice(1, props.technology.length - 1).filter(Boolean);
+            latestArticle.push(...validArticles);
+        }
+    }
+
+    return latestArticle
+}
+
 export default async function HomePage() {
     const result = await fetchLatestNews('start', 40);
 
     let sidebarArticle: Array<Article> = []
     if (typeof result.msg === 'object' && result.msg !== null)
         sidebarArticle = await getSideArticle(result.msg);
+
+    let latestArticle: Array<Article> = []
+    if (typeof result.msg === 'object' && result.msg !== null)
+        latestArticle = await getLatestArticle(result.msg);
 
 
     return (
@@ -50,13 +88,12 @@ export default async function HomePage() {
                 <section className="mx-auto grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
                     <div className="sm:col-span-2 px-2">
                         {typeof result.msg === 'object' && result.msg !== null && (
-                            <LatestNews {...result.msg} />
+                            <LatestNews art={latestArticle} />
                         )}
                     </div>
                     <div className="px-2">
                         {typeof result.msg === 'object' && result.msg !== null && (
-                            // <MiddlePannel {...result.msg} />
-                            <MiddlePannel {...sidebarArticle} />
+                            <MiddlePannel art={sidebarArticle} />
                         )}
                     </div>
                 </section>
