@@ -1,9 +1,10 @@
-import { Article } from '../interface/article';
+import { ArticleProps } from '../interface/article';
+import { APP_BASE_URL } from '../utils/config';
 
-export const fetchLatestNews = async (callType: string, record: number): Promise<{ msg: Article | string, status: number }> => {
+export const fetchLatestNews = async (callType: string, record: number): Promise<{ msg: ArticleProps | string, status: number }> => {
     try {
-        const response = await fetch(`/api/ndata/?callType=${callType}&record=${record}`);
-        const result: { msg: Article, status: number } = await response.json();
+        const response = await fetch(`${APP_BASE_URL}/api/ndata/?callType=${callType}&record=${record}`);
+        const result: { msg: ArticleProps, status: number } = await response.json();
         return result;
     } catch (error) {
         if (error instanceof Error) {
