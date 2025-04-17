@@ -1,9 +1,6 @@
 import Banner from "./component/Banner";
-// import CategoryMenu from "./component/CategoriesMenu";
 import LatestNews from "./component/Latest";
 import MiddlePannel from "./component/MiddlePannel";
-// import Pannel from "./component/Pannel";
-// import LatestNews2 from "./component/Latest2";
 import TopStories from "./component/TopStories";
 
 export default function HomePage() {
