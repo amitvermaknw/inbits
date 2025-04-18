@@ -17,14 +17,21 @@ const getSideArticle = (props: ArticleProps): Array<Article> => {
     }
     if (typeof props === 'object' && props.hasOwnProperty("science")) {
         if (Array.isArray(props.science)) {
-            const validArticles = props.science.slice(1, props.science.length - 1).filter(Boolean);
+            const validArticles = props.science.slice(0, props.science.length - 1).filter(Boolean);
             sideArticle.push(...validArticles);
         }
     }
 
-    if (typeof props === 'object' && props.hasOwnProperty("science")) {
-        if (Array.isArray(props.science)) {
-            const validArticles = props.science.slice(1, props.science.length - 1).filter(Boolean);
+    if (typeof props === 'object' && props.hasOwnProperty("health")) {
+        if (Array.isArray(props.health)) {
+            const validArticles = props.health.slice(0, props.health.length - 1).filter(Boolean);
+            sideArticle.push(...validArticles);
+        }
+    }
+
+    if (typeof props === 'object' && props.hasOwnProperty("others")) {
+        if (Array.isArray(props.others)) {
+            const validArticles = props.others.slice(0, props.others.length - 1).filter(Boolean);
             sideArticle.push(...validArticles);
         }
     }
@@ -38,20 +45,20 @@ const getLatestArticle = (props: ArticleProps): Array<Article> => {
 
     if (typeof props === 'object' && props.hasOwnProperty("politics")) {
         if (Array.isArray(props.politics)) {
-            const validArticles = props.politics.slice(0, props.politics.length - 1).filter(Boolean); //4
+            const validArticles = props.politics.slice(4, props.politics.length - 1).filter(Boolean); //4
             latestArticle.push(...validArticles);
         }
     }
     if (typeof props === 'object' && props.hasOwnProperty("sports")) {
         if (Array.isArray(props.sports)) {
-            const validArticles = props.sports.slice(0, props.sports.length - 1).filter(Boolean); //3
+            const validArticles = props.sports.slice(3, props.sports.length - 1).filter(Boolean); //3
             latestArticle.push(...validArticles);
         }
     }
 
     if (typeof props === 'object' && props.hasOwnProperty("entertainment")) {
         if (Array.isArray(props.entertainment)) {
-            const validArticles = props.entertainment.slice(0, props.entertainment.length - 1).filter(Boolean); //2
+            const validArticles = props.entertainment.slice(2, props.entertainment.length - 1).filter(Boolean); //2
             latestArticle.push(...validArticles);
         }
     }
@@ -59,6 +66,20 @@ const getLatestArticle = (props: ArticleProps): Array<Article> => {
     if (typeof props === 'object' && props.hasOwnProperty("technology")) {
         if (Array.isArray(props.technology)) {
             const validArticles = props.technology.slice(1, props.technology.length - 1).filter(Boolean);
+            latestArticle.push(...validArticles);
+        }
+    }
+
+    if (typeof props === 'object' && props.hasOwnProperty("business")) {
+        if (Array.isArray(props.business)) {
+            const validArticles = props.business.slice(1, props.business.length - 1).filter(Boolean);
+            latestArticle.push(...validArticles);
+        }
+    }
+
+    if (typeof props === 'object' && props.hasOwnProperty("world")) {
+        if (Array.isArray(props.world)) {
+            const validArticles = props.world.slice(0, props.world.length - 1).filter(Boolean);
             latestArticle.push(...validArticles);
         }
     }

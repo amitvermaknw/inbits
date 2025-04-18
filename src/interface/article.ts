@@ -1,4 +1,5 @@
 export interface Article {
+    articleId?: string,
     source: { id: string, name: string },
     author: string,
     title: string,
@@ -8,7 +9,8 @@ export interface Article {
     publishedAt: string,
     content: string | null,
     summary?: { category: string, summary: string },
-    country?: string | null
+    country?: string | null,
+    slug?: string
 }
 
 export interface ArticleProps {

@@ -3,7 +3,7 @@ import { QuerySnapshot, DocumentData, QueryDocumentSnapshot } from "firebase-adm
 import { db } from "../config/firebaseAdmin";
 import { Article } from "../../../interface/article";
 
-const docPath = "inbits_collection/newsapi/us/articles";
+const docPath = "inbits_collection/us/articles";
 let lastVisibleData: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined;
 
 export async function GET(req: NextRequest) {

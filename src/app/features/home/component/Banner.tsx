@@ -72,7 +72,7 @@ const Banner = (props: ArticleProps) => {
                                         objectFit="contain"
                                         className="w-full h-full object-cover rounded-lg rounded-t-md rounded-b-md"
                                     />
-                                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4 rounded-b-lg">
+                                    <div className="absolute bottom-0 left-0 right-0 bg-black/80 text-white p-4 rounded-b-lg">
                                         <h2 className="text-lg font-semibold">{item.title}</h2>
                                     </div>
                                 </div>
