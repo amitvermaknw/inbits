@@ -6,8 +6,9 @@ export interface Article {
     url: string,
     urlToImage: string,
     publishedAt: string,
-    content: string,
-    summary?: { category: string, summary: string }
+    content: string | null,
+    summary?: { category: string, summary: string },
+    country?: string | null
 }
 
 export interface ArticleProps {
