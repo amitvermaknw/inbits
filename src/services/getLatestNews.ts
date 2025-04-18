@@ -3,7 +3,7 @@ import { APP_BASE_URL } from '../utils/config';
 
 export const fetchLatestNews = async (callType: string, record: number): Promise<{ msg: ArticleProps | string, status: number }> => {
     try {
-        const response = await fetch(`${APP_BASE_URL}/api/ndata/?callType=${callType}&record=${record}`);
+        const response = await fetch(`${APP_BASE_URL}/api/article/list/?callType=${callType}&record=${record}`);
         const result: { msg: ArticleProps, status: number } = await response.json();
         return result;
     } catch (error) {

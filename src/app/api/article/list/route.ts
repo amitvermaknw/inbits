@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { QuerySnapshot, DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
-import { db } from "../config/firebaseAdmin";
-import { Article } from "../../../interface/article";
+import { db } from "../../config/firebaseAdmin";
+import { Article } from "../../../../interface/article";
 
 const docPath = "inbits_collection/us/articles";
 let lastVisibleData: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined;
