@@ -1,1 +1,10 @@
 export const GET_LATEST_NEWS = 'getlatestnews';
+export const POLITICS = 'politics';
+export const SPORTS = 'sports';
+export const ENTERTAINMENT = 'entertainment';
+export const TECHNOLOGY = 'technology';
+export const BUSINESS = 'business';
+export const HEALTH = 'health';
+export const SCIENCE = 'science';
+export const WORLD = 'world';
+export const OTHERS = 'others';
