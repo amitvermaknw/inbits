@@ -12,7 +12,7 @@ export const generateSlug = (title: string, id: string) => {
         remove: /[*+~.()'"!:@]/g,
     });
 
-    return `${cleanTitle}-${id}`;
+    return `${cleanTitle}--${id}`;
 };
 
 // export const generateSlug = (title: string, id: string) => {

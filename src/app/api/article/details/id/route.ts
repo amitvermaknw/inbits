@@ -7,9 +7,11 @@ const docPath = "inbits_collection/us/articles";
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
-        const articleId = Number(searchParams.get("articleId"));
+        const articleId = searchParams.get("articleId");
+        const slug = searchParams.get("slug");
+
         let query: QuerySnapshot<DocumentData, DocumentData> | undefined = undefined;
-        query = await db.collection(docPath).where("articleId", "==", articleId).get();
+        query = await db.collection(docPath).where("articleId", "==", articleId).get() || await db.collection(docPath).where("slug", "==", slug).get();
 
         const result = [];
         for (const doc of query?.docs ? query.docs : []) {
@@ -18,9 +20,16 @@ export async function GET(req: NextRequest) {
             result.push(documentData)
         }
 
+        if (result.length) {
+            return NextResponse.json({
+                status: 200,
+                msg: result
+            });
+        }
+
         return NextResponse.json({
-            status: 200,
-            msg: result
+            status: 400,
+            msg: "Sorry!!! No article found."
         });
 
     } catch (error) {

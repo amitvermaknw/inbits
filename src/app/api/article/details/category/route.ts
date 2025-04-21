@@ -8,13 +8,24 @@ const docPath = "inbits_collection/us/articles";
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
-        const category = Number(searchParams.get("category"));
-        const currentDate = Number(searchParams.get("currentDate"));
+        const category = searchParams.get("category");
+        const paramDate = searchParams.get("currentDate") as string;
+        const currentDate = new Date(paramDate);
 
-        const start = new Date(currentDate);
-        start.setHours(0, 0, 0, 0);
-        const end = new Date(currentDate);
-        end.setHours(23, 59, 59, 999);
+        const start = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate(),
+            0, 0, 0, 0
+        ).toISOString();
+
+        const end = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate(),
+            23, 59, 59, 999
+        ).toISOString();
+
 
         // Firestore query
         const snapshot = await db.collection(docPath)
