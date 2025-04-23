@@ -10,7 +10,7 @@ import { Article } from '@/src/interface/article';
 
 interface ArticleDetails {
     articles: Array<Article>,
-    reachedEnd: () => void
+    reachedEnd: (category: string, articleId: string) => void
 }
 
 export default function NewsDetails({ articles, reachedEnd }: ArticleDetails) {
@@ -25,7 +25,7 @@ export default function NewsDetails({ articles, reachedEnd }: ArticleDetails) {
                         clickable: true,
                     }}
                     mousewheel={true}
-                    onReachEnd={() => reachedEnd?.()}
+                    onReachEnd={() => reachedEnd?.(articles[0].summary?.category as string, articles[0].articleId as string)}
                     modules={[Mousewheel, Navigation]}
                     className="w-full h-screen md:h-screen px-4 md:col-span-4 md:col-sart-2"
                 >

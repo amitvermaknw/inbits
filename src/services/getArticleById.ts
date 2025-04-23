@@ -17,10 +17,10 @@ export const fetchArticleById = async (articleId: string): Promise<{ msg: Array<
     }
 }
 
-export const fetchArticleByCategory = async (category: string, currentDate: Date): Promise<{ msg: Array<Article> | string, status: number }> => {
+export const fetchArticleByCategory = async (category: string, currentDate: Date, articleId: string): Promise<{ msg: Array<Article> | string, status: number }> => {
     try {
         const isoDate = currentDate.toISOString();
-        const response = await fetch(`${APP_BASE_URL}/api/article/details/category/?category=${category}&currentDate=${encodeURIComponent(isoDate)}`);
+        const response = await fetch(`${APP_BASE_URL}/api/article/details/category/?category=${category}&articleId=${articleId}&currentDate=${encodeURIComponent(isoDate)}`);
         const result: { msg: Array<Article>, status: number } = await response.json();
         return result;
     } catch (error) {

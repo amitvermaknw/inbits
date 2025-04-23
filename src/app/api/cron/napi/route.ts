@@ -44,10 +44,11 @@ export async function GET(req: Request) {
                                     const slug = generateSlug(article.title, articleId);
 
                                     if (typeof content.msg === "string" && content.msg.trim().split(/\s+/).length > 100) {
-                                        let summary = await summarized(content.msg);
+                                        const summary = await summarized(content.msg);
                                         if (summary?.code === 200) {
-                                            summary = JSON.parse(summary?.message as string);
-                                            Object.assign(article, { summary: summary });
+                                            const parseMessage = JSON.parse(summary?.message as string) as { summary: string, category: string };
+                                            const modifiedSummary = { ...parseMessage, category: parseMessage.category.toLowerCase() };
+                                            Object.assign(article, { summary: modifiedSummary });
                                             article.content = null;
                                             article.country = country;
                                             article.articleId = articleId;
