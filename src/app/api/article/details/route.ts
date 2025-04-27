@@ -31,8 +31,6 @@ export async function GET(req: NextRequest) {
             23, 59, 59, 999
         ).toISOString();
 
-
-
         if (articleId && slug !== '') {
             const query = await db.collection(docPath).where("articleId", "==", articleId).get();
             const result = query.docs.map(doc => ({ ...doc.data() } as Article));
@@ -44,7 +42,6 @@ export async function GET(req: NextRequest) {
         if (currentCategory === '' || currentCategory === null) {
             currentCategory = articles[0].summary?.category as string
         }
-
 
         let query = await db.collection(docPath)
             .where("summary.category", "==", currentCategory)
@@ -66,6 +63,8 @@ export async function GET(req: NextRequest) {
         if (result.length) {
             articles.push(...result);
         }
+
+        console.log("Articles===", articles)
         return NextResponse.json({
             status: 200,
             msg: articles
