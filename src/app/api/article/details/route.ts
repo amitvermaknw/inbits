@@ -64,7 +64,6 @@ export async function GET(req: NextRequest) {
             articles.push(...result);
         }
 
-        console.log("Articles===", articles)
         return NextResponse.json({
             status: 200,
             msg: articles

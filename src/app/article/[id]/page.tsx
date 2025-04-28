@@ -8,14 +8,13 @@ import { AlertCircle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
 import { POLITICS, SPORTS, TECHNOLOGY, WORLD, ENTERTAINMENT, BUSINESS, HEALTH, SCIENCE, OTHERS } from '@/src/utils/contants';
 import { useParams } from 'next/navigation';
-import { Skeleton } from '@/src/components/ui/skeleton';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from "swiper";
 import { Mousewheel, Navigation } from 'swiper/modules';
+import BarLoader from '@/src/components/ui/barloader';
 // import style from '../css/News.module.css';
 
-// const categories = [POLITICS, SPORTS, ENTERTAINMENT, TECHNOLOGY, BUSINESS, HEALTH, SCIENCE, WORLD, OTHERS];
-const categories = [POLITICS, SPORTS, ENTERTAINMENT];
+const categories = [POLITICS, SPORTS, ENTERTAINMENT, TECHNOLOGY, BUSINESS, HEALTH, SCIENCE, WORLD, OTHERS];
 
 
 export default function Details() {
@@ -30,6 +29,7 @@ export default function Details() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [trackCategories, setTrackCategories] = useState<string[]>([]);
     const trackCategory = new Set();
+    const swipeStatus = localStorage.getItem("swipestatus");
 
 
     const fetchContent = async (category: string, articleId: string) => {
@@ -53,7 +53,11 @@ export default function Details() {
         })
 
         if (nextArticles.msg.length > 0) {
-            setArticles(prev => [...prev, ...nextArticles.msg as Array<Article>]);
+            setArticles(prev => {
+                const existingIds = new Set(prev.map(article => article.articleId));
+                const newArticles = (nextArticles.msg as Array<Article>).filter(article => !existingIds.has(article.articleId));
+                return [...prev, ...newArticles];
+            });
         } else if (currentCategoryIndex < categories.length - 1) {
             const findIndex = trackCategories.findIndex(item => item === category);
             if (findIndex === currentCategoryIndex) {
@@ -94,59 +98,53 @@ export default function Details() {
 
 
     const handleReachEnd = async (articleId: string, category: string) => {
-        if (swiperRef.current) {
+        setLoaded(true);
+        localStorage.setItem("swipestatus", "done")
+        if (swiperRef.current && typeof swiperRef.current.activeIndex === "number") {
             setActiveIndex(swiperRef.current.activeIndex);
         }
         setArtId(articleId)
-        fetchContent(category, articleId,)
+        await fetchContent(category, articleId)
+        setLoaded(false);
     };
 
     return (<>
-        {!loader ?
-            <div className='md:max-w-4xl mx-auto pb-8 pt-4 p-2 h-full'>
-                <div className="grid md:grid-cols-3 md:gap-4 ">
-                    <Swiper
-                        onSwiper={(swiper) => (swiperRef.current = swiper)}
-                        direction={'vertical'}
-                        spaceBetween={30}
-                        centeredSlides={true}
-                        pagination={{
-                            clickable: true,
-                        }}
-                        mousewheel={true}
-                        onSlideChange={(swiper) => {
-                            if (swiper.activeIndex === swiper.slides.length - 1) {
-                                handleReachEnd(articles[swiper.activeIndex].articleId as string, articles[swiper.activeIndex].summary?.category as string)
-                            }
-                        }}
-                        initialSlide={activeIndex}
-                        modules={[Mousewheel, Navigation]}
-                        className="w-full h-screen md:h-screen px-4 md:col-span-4 md:col-sart-2"
-                    >
-                        {articles.map((item: Article, index: number) => (
-                            <SwiperSlide key={`${item.title}_${index}_slide`} className="">
-                                <NewsDetails articles={item} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-700 animate-bounce z-50 md:hidden">
-                        <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
-                        </svg>
-                        <span className="text-sm font-medium">Swipe Up</span>
-                    </div>
-                </div>
-
+        {/* {!loader ? */}
+        <div className='md:max-w-4xl mx-auto pb-8 pt-4 p-2 h-full'>
+            <div className="grid md:grid-cols-3 md:gap-4 ">
+                <Swiper
+                    onSwiper={(swiper) => (swiperRef.current = swiper)}
+                    direction={'vertical'}
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    mousewheel={true}
+                    onSlideChange={(swiper) => {
+                        if (swiper.activeIndex === swiper.slides.length - 1) {
+                            handleReachEnd(articles[swiper.activeIndex].articleId as string, articles[swiper.activeIndex].summary?.category as string)
+                        }
+                    }}
+                    initialSlide={activeIndex}
+                    modules={[Mousewheel, Navigation]}
+                    className="w-full h-screen md:h-screen px-4 md:col-span-4 md:col-sart-2"
+                >
+                    {articles.map((item: Article, index: number) => (
+                        <SwiperSlide key={`${item.title}_${index}_slide`} className="">
+                            <NewsDetails articles={item} />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+                <BarLoader loading={loader} />
+                {!swipeStatus && <div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-700 animate-bounce z-50 md:hidden">
+                    <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                    </svg>
+                    <span className="text-sm font-medium">Swipe Up</span>
+                </div>}
             </div>
-            :
-            <div className="flex items-center space-x-4 mt-4">
-                <Skeleton className="h-12 w-12 rounded-full" />
-                <div className="space-y-2">
-                    <Skeleton className="h-4 w-[250px]" />
-                    <Skeleton className="h-4 w-[200px]" />
-                </div>
-            </div>
-        }
+        </div>
         {!articles.length && loader == false && typeof articles !== 'object' && <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
