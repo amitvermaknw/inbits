@@ -17,7 +17,7 @@ export default function Header() {
 
     return (
         <header className="w-full bg-white dark:bg-gray-900 shadow-md">
-            <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div className="container mx-auto px-2 py-3 flex justify-between items-center">
                 {/* Logo */}
                 <Link href="/">
                     <h1 className="text-xl font-bold text-gray-900 dark:text-white">InBits</h1>

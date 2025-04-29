@@ -29,8 +29,7 @@ export default function Details() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [trackCategories, setTrackCategories] = useState<string[]>([]);
     const trackCategory = new Set();
-    const swipeStatus = localStorage.getItem("swipestatus");
-
+    const [swipeStatus, setSwipeStatus] = useState<string | null>(null);
 
     const fetchContent = async (category: string, articleId: string) => {
         const today = new Date();
@@ -76,6 +75,8 @@ export default function Details() {
     useEffect(() => {
         const loadInitial = async () => {
             setLoaded(true);
+            const swipe = localStorage.getItem("swipestatus");
+            setSwipeStatus(swipe);
             if (typeof fetchWithArticleId !== "string") return;
             const mainArticle = await fetchArticles('', currentDate, fetchWithArticleId as string);
             if (mainArticle.status === 200 && typeof mainArticle.msg === 'object' && mainArticle.msg.length !== 0) {

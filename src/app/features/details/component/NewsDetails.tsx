@@ -23,7 +23,11 @@ export default function NewsDetails({ articles }: ArticleDetails) {
                 />
             </div>
             <div className="flex-1 min-w-0 ms-2 mt-2">
-                <div className="text-gray-900 font-normal mb-2">{articles.summary?.summary}-{articles.articleId}</div>
+                <div className="text-gray-900 font-normal mb-2">{articles.summary?.summary}</div>
+            </div>
+
+            <div className="flex-1 min-w-0 ms-2 mt-8 ">
+                <span className='text-sm text-gray-400'>Check detailed article: <a href={articles.url} target='_blank' >{articles.source.name}</a></span>
             </div>
         </div>
     </>
