@@ -6,7 +6,6 @@ import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 
 
-
 export default async function Politics() {
     const result = await fetchArticleByCategory("politics", new Date());
 

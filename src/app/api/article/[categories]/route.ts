@@ -63,9 +63,13 @@ export async function GET(req: NextRequest) {
             }
         }
 
+        const uniqueArticles = Array.from(
+            new Map(articles.map(article => [article.articleId, article])).values()
+        );
+
         return NextResponse.json({
             status: 200,
-            msg: articles
+            msg: uniqueArticles
         });
 
     } catch (error) {
