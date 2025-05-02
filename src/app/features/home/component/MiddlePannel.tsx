@@ -8,8 +8,8 @@ export default function MiddlePannel(props: { art: Array<Article> }) {
             <h1 className="p-2 mb-2 text-left font-sans font-bold md:text-md xl:text-xl">Others</h1>
             <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
                 {props.art.map((item: Article, index: number) => {
-                    return <article className="col-span-1 m-auto min-h-full min-w-full  cursor-pointer overflow-hidden rounded-lg pb-2 shadow-lg transition-transform duration-200 hover:translate-y-2" key={`${item.title}_${index}`}>
-                        <a href={`/article/${item.slug}`} className="flex items-center bg-white border-b border-gray-200 h-full">
+                    return <article className="col-span-1 m-auto min-h-full min-w-full cursor-pointer overflow-hidden rounded-lg pb-2 shadow-lg transition-transform duration-200 hover:translate-y-2" key={`${item.title}_${index}`}>
+                        <a href={`/article/${item.slug}`} className="items-center bg-white border-b border-gray-200 h-full">
                             <div className="flex-shrink-0">
                                 <Image
                                     src={item.urlToImage}

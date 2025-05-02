@@ -1,0 +1,92 @@
+'use client';
+
+import { useArticleContext } from '@/src/hooks/useArticleContext';
+import { useParams } from 'next/navigation';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore from "swiper";
+import { useRef, useState } from 'react';
+import { Mousewheel, Navigation } from 'swiper/modules';
+import { AlertCircle } from "lucide-react"
+import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
+import BarLoader from '@/src/components/ui/barloader';
+import { Article } from '@/src/interface/article';
+import NewsDetails from '@/src/app/features/details/component/NewsDetails';
+
+
+export default function ArticleCategory() {
+    const swiperRef = useRef<SwiperCore | null>(null);
+    const [loader, setLoaded] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [swipeStatus, setSwipeStatus] = useState<string | null>(null);
+
+    const { articleId } = useParams();
+    const { articles } = useArticleContext();
+    let id = null;
+
+    if (typeof articleId === 'string') {
+        id = articleId.split(/--?/).pop() || articleId.split(/-?/).pop();
+    }
+
+    const index = articles.findIndex(article => article.articleId === id);
+    const current = articles[index];
+    const nextArticles = articles.slice(index);
+
+    if (!current) return <p>Article not found.</p>;
+
+    const handleReachEnd = async () => {
+        setLoaded(true);
+        // localStorage.setItem("swipestatus", "done")
+        const swipe = localStorage.getItem("swipestatus");
+        setSwipeStatus(swipe);
+        if (swiperRef.current && typeof swiperRef.current.activeIndex === "number") {
+            setActiveIndex(swiperRef.current.activeIndex);
+        }
+        setLoaded(false);
+    };
+
+    return (<>
+        <div className='md:max-w-4xl mx-auto pb-8 pt-4 p-2 h-full'>
+            <div className="grid md:grid-cols-3 md:gap-4 ">
+                <Swiper
+                    onSwiper={(swiper) => (swiperRef.current = swiper)}
+                    direction={'vertical'}
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    mousewheel={true}
+                    // onSlideChange={(swiper) => {
+                    //     if (swiper.activeIndex === swiper.slides.length - 1) {
+                    //         handleReachEnd(articles[swiper.activeIndex].articleId as string, articles[swiper.activeIndex].summary?.category as string)
+                    //     }
+                    // }}
+                    initialSlide={activeIndex}
+                    modules={[Mousewheel, Navigation]}
+                    className="w-full h-screen md:h-screen px-4 md:col-span-4 md:col-sart-2"
+                >
+                    {nextArticles.map((item: Article, index: number) => (
+                        <SwiperSlide key={`${item.title}_${index}_slide`} className="">
+                            <NewsDetails articles={item} />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+                <BarLoader loading={loader} />
+                {!swipeStatus && <div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-700 animate-bounce z-50 md:hidden">
+                    <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                    </svg>
+                    <span className="text-sm font-medium">Swipe Up</span>
+                </div>}
+            </div>
+        </div>
+        {!articles.length && loader == false && typeof articles !== 'object' && <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>
+                Something is wrong from our end, we will resume shortly.
+            </AlertDescription>
+        </Alert>}
+
+    </>);
+}

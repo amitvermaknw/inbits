@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/src/components/layout/Header";
 import BottomNav from "@/src/components/nav/BottomNav";
+import ArticleProvider from "./features/context/ArticleContext";
 
 
 const geistSans = Geist({
@@ -30,11 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <div className='md:container md:mx-auto mb-24'>
-          {children}
-        </div>
-        <BottomNav />
+        <ArticleProvider>
+          <Header />
+          <div className='md:container md:mx-auto mb-24'>
+            {children}
+          </div>
+          <BottomNav />
+        </ArticleProvider>
       </body>
     </html>
   );
