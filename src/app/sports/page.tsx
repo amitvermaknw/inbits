@@ -14,7 +14,7 @@ export default async function Sports() {
                     <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-2 md:gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2">
                         {typeof result.msg === 'object' ? result.msg.map((item: Article, index: number) => {
                             return <article className="w-full h-full" key={`${item.title}_${index}`}>
-                                <a href={`/article/${item.slug}`}
+                                <a href={`/article/byid/${item.slug}`}
                                     className="flex items-center bg-white border-b border-gray-200 h-full">
                                     <div className="flex-shrink-0 ml-1 mb-2">
                                         <Image

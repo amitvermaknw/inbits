@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef, useState, useEffect } from 'react';
-import NewsDetails from "../../features/details/component/NewsDetails";
+import NewsDetails from "@/src/app/features/details/component/NewsDetails";
 import { Article } from '@/src/interface/article';
 import { fetchArticles } from '@/src/services/getArticles';
 import { AlertCircle } from "lucide-react"
@@ -12,7 +12,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from "swiper";
 import { Mousewheel, Navigation } from 'swiper/modules';
 import BarLoader from '@/src/components/ui/barloader';
-// import style from '../css/News.module.css';
 
 const categories = [POLITICS, SPORTS, ENTERTAINMENT, TECHNOLOGY, BUSINESS, HEALTH, SCIENCE, WORLD, OTHERS];
 

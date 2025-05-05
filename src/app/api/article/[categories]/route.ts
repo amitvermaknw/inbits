@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
         const currentDate = new Date(paramDate);
         const articles: Array<Article> = [];
         let daysTried = 0;
-        const maxDaysBack = 10;
+        const maxDaysBack = 20;
 
         while (articles.length < pageSize && daysTried < maxDaysBack) {
             const start = new Date(
