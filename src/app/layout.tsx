@@ -17,8 +17,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "InBits",
-  description: "News in 10 seconds",
+  title: 'Best Daily News - Politics, Tech, World',
+  description: 'Stay informed with the latest political, tech, and world news in 60 seconds. Fast, reliable, and always up to date.',
+  keywords: ['news', 'politics', 'technology', 'world news', 'sports'],
+  robots: 'index, follow',
+  icons: {
+    icon: '/favicon.ico'
+  },
+  openGraph: {
+    title: 'Best Daily News in 60 seconds',
+    description: 'Latest and breaking news across categories in 60 seconds.',
+    url: 'https://www.inbits.co',
+    siteName: 'InBits',
+    type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Daily News Thumbnail',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
