@@ -29,7 +29,7 @@ export default function ClientPage({ allArticles }: { allArticles: Article[] }) 
                             <div className="flex-shrink-0">
                                 <Image
                                     src={item.urlToImage}
-                                    alt={item.urlToImage}
+                                    alt={item.title}
                                     width={50}
                                     height={50}
                                     objectFit="cover"

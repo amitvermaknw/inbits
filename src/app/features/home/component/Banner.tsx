@@ -67,7 +67,7 @@ const Banner = (props: ArticleProps) => {
                                     <a href={`/article/byid/${item.slug}`} className="flex items-center bg-white border-b border-gray-200 h-full">
                                         <Image
                                             src={item.urlToImage}
-                                            alt={item.urlToImage}
+                                            alt={item.title}
                                             width={60}
                                             height={50}
                                             objectFit="contain"
@@ -90,7 +90,7 @@ const Banner = (props: ArticleProps) => {
                     <a href={`/article/byid/${item.slug}`} className="flex items-center bg-white border-b border-gray-200 h-full">
                         <Image
                             src={item.urlToImage}
-                            alt={item.urlToImage}
+                            alt={item.title}
                             width={60}
                             height={50}
                             objectFit="contain"
