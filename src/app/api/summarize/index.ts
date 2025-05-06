@@ -18,14 +18,18 @@ export async function summarized(articleText: string) {
                 {
                     role: "user",
                     content: `
-                        Summarize the following news article into a single concise paragraph of 70 to 90 words that retains the full meaning and completeness of the article. Avoid bullet points, personal opinions, or analysis. Use clear language. Focus strictly on the core facts and events using a neutral tone and journalistic style.
-                        Then provide a single-word or short-phrase label for the category the article belongs to (e.g., Politics, Business, Technology, Entertainment, Health, Science, Sports, or World). Respond strictly as raw JSON, without markdown formatting or code blocks. Do not include triple backticks or any extra text.
+                        Summarize the following news article into a single concise paragraph of 60 to 70 words that retains the full meaning and completeness of the article. Avoid bullet points, personal opinions, or analysis. Use clear language. Focus strictly on the core facts and events using a neutral tone and journalistic style.
                         
+                        Also, create a clear and descriptive title of 10 to 15 words that accurately captures the main idea of the article.
+
+                        Then provide a single-word or short-phrase label for the category the article belongs to (e.g., Politics, Business, Technology, Entertainment, Health, Science, Sports, or World). Respond strictly as raw JSON, without markdown formatting or code blocks. Do not include triple backticks or any extra text.
+
                         Respond **only in the following valid JSON format**:
 
                         {
-                        "summary": "The article discusses...",
-                        "category": "Politics"
+                            "title": "Article title here in 10-15 words",
+                            "summary": "The article discusses...",
+                            "category": "Politics"
                         }
 
                         Here is the article:

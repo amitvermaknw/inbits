@@ -46,7 +46,7 @@ export async function GET(req: Request) {
                                     if (typeof content.msg === "string" && content.msg.trim().split(/\s+/).length > 100) {
                                         const summary = await summarized(content.msg);
                                         if (summary?.code === 200) {
-                                            const parseMessage = JSON.parse(summary?.message as string) as { summary: string, category: string };
+                                            const parseMessage = JSON.parse(summary?.message as string) as { summary: string, category: string, title: string };
                                             const modifiedSummary = { ...parseMessage, category: parseMessage.category.toLowerCase() };
                                             Object.assign(article, { summary: modifiedSummary });
                                             article.content = null;
