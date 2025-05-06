@@ -22,7 +22,7 @@ export default function LatestNews(props: { art: Array<Article> }) {
                                 />
                             </div>
                             <div className="flex-1 min-w-0 ms-2 p-2">
-                                <div className="text-gray-900 font-normal mb-2">{item.title.replace(/-\s*[^-]*$/, ".").replace(/\s+\./, ".")}</div>
+                                <div className="text-gray-900 font-bold mb-2">{item.title.replace(/-\s*[^-]*$/, ".").replace(/\s+\./, ".")}</div>
                             </div>
                         </a>
                     </article>
