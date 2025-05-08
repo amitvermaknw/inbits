@@ -6,6 +6,8 @@ if (!admin.apps.length) {
         credential: admin.credential.applicationDefault(),
         databaseURL: "https://streettadka-default-rtdb.firebaseio.com"
     });
+
+    console.log("✅ Firebase Admin initialized");
 }
 
 const db = admin.firestore();
