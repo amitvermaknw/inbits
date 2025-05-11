@@ -86,12 +86,13 @@ const getLatestArticle = (props: ArticleProps): Array<Article> => {
         }
     }
 
-    generateMetadata({
-        title: latestArticle[0].title,
-        summary: splitIntoChunks(latestArticle[0].description),
-        image: latestArticle[0].urlToImage
-    });
-
+    if (latestArticle.length) {
+        generateMetadata({
+            title: latestArticle[0].title,
+            summary: splitIntoChunks(latestArticle[0].description),
+            image: latestArticle[0].urlToImage
+        });
+    }
     return latestArticle
 }
 
