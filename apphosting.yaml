@@ -14,3 +14,8 @@ env:
     availability:
       - BUILD
       - RUNTIME
+
+runConfig:
+  cpu: 1
+  memoryMiB: 512
+  maxInstances: 5
