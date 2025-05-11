@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "appHosting": {
+      "deploy": {
+        "runtime": {
+          "scaling": {
+            "max_instances": 5
+          }
+        }
+      }
+    }
+  }
+}

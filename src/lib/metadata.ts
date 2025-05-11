@@ -13,13 +13,13 @@ export async function generateMetadata(article: {
         openGraph: {
             title: article?.title,
             description: article?.summary,
-            images: article?.image || '/ogimage.jpg',
+            images: article?.image || 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png',
         },
         twitter: {
             card: 'summary_large_image',
             title: article?.title,
             description: article?.summary,
-            images: ['/ogimage.jpg'],
+            images: ['https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png'],
         },
     };
 }
