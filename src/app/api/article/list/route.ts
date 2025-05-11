@@ -82,7 +82,6 @@ export async function GET(req: NextRequest) {
 
     } catch (error) {
         if (error instanceof Error) {
-            console.error("❌ Firestore connection failed:", error);
             return NextResponse.json({ msg: `Error getting documents: ${error.message}`, status: 500 });
         } else {
             return NextResponse.json({ msg: `Error getting documents: ${error}`, status: 500 });

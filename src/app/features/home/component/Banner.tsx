@@ -64,7 +64,7 @@ const Banner = (props: ArticleProps) => {
                         {
                             content.map((item: Article, index: number) => <SwiperSlide key={index} className="flex items-center justify-center bg-blue-200">
                                 <div className="relative w-full h-64 md:h-96">
-                                    <a href={`/article/byid/${item.slug}`} className="flex items-center bg-white border-b border-gray-200 h-full">
+                                    <a href={`/article/latest/${item.slug}`} className="flex items-center bg-white border-b border-gray-200 h-full">
                                         <Image
                                             src={item.urlToImage}
                                             alt={item.title}
@@ -87,7 +87,7 @@ const Banner = (props: ArticleProps) => {
             </div>
             <div className="px-2 hidden sm:block">
                 {techContent.map((item: Article, index: number) => <div key={index} className="relative w-full h-64 md:h-96">
-                    <a href={`/article/byid/${item.slug}`} className="flex items-center bg-white border-b border-gray-200 h-full">
+                    <a href={`/article/latest/${item.slug}`} className="flex items-center bg-white border-b border-gray-200 h-full">
                         <Image
                             src={item.urlToImage}
                             alt={item.title}

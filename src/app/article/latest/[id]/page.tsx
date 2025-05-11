@@ -19,56 +19,58 @@ const categories = [POLITICS, SPORTS, ENTERTAINMENT, TECHNOLOGY, BUSINESS, HEALT
 export default function Details() {
     const params = useParams();
     const fetchWithArticleId = params.id?.toString();
-    const [articles, setArticles] = useState<Article[]>([]);
+    const [article, setArticles] = useState<{ articles: Array<Article> }>({ articles: [] });
     const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [loader, setLoaded] = useState(false);
-    const [artId, setArtId] = useState('');
+    // const [artId, setArtId] = useState('');
     const swiperRef = useRef<SwiperCore | null>(null);
     const [activeIndex, setActiveIndex] = useState(0);
-    const [trackCategories, setTrackCategories] = useState<string[]>([]);
-    const trackCategory = new Set();
+    // const [trackCategories, setTrackCategories] = useState<string[]>([]);
+    // const trackCategory = new Set();
     const [swipeStatus, setSwipeStatus] = useState<string | null>(null);
+    const [excludeIds, setExcludeIds] = useState<string[]>([]);
+    const [isComplete, setIsComplete] = useState(false);
 
-    const fetchContent = async (category: string, articleId: string) => {
-        const today = new Date();
-        const diffDays = Math.floor((today.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24));
 
-        if (diffDays >= 10) {
-            return;
-        }
+    const fetchContent = async (selectedCategory: string, articleId: string) => {
+        if (isComplete) return;
 
-        const nextArticles = await fetchArticles(category, currentDate, articleId);
-        if (category) {
-            trackCategory.add(category);
-        }
-        setTrackCategories(prev => {
-            const findIndex = prev.findIndex(item => item === category);
-            if (category && findIndex < 0) {
-                return [...prev, category]
-            }
-            return prev;
-        })
+        const nextArticles = await fetchArticles({
+            currentDate,
+            excludeIds,
+            categories,
+            currentCategoryIndex,
+            articleId,
+            selectedCategory
+        });
 
-        if (nextArticles.msg.length > 0) {
-            setArticles(prev => {
-                const existingIds = new Set(prev.map(article => article.articleId));
-                const newArticles = (nextArticles.msg as Array<Article>).filter(article => !existingIds.has(article.articleId));
-                return [...prev, ...newArticles];
-            });
-        } else if (currentCategoryIndex < categories.length - 1) {
-            const findIndex = trackCategories.findIndex(item => item === category);
-            if (findIndex === currentCategoryIndex) {
-                setCurrentCategoryIndex(prev => prev + 2);
-            } else {
-                setCurrentCategoryIndex(prev => prev + 1);
+        if (typeof nextArticles.msg === 'object') {
+            if (nextArticles.msg.articles.length) {
+                const data: {
+                    articles: Array<Article>;
+                    nextDate: Date;
+                    nextCategoryIndex: number;
+                    isComplete: boolean;
+                } = nextArticles.msg;
+
+                setArticles(prev => ({
+                    ...prev,
+                    articles: [...prev.articles, ...data.articles]
+                }));
+
+                setExcludeIds(prev => [...prev, ...data.articles.map(a => a.articleId).filter(item => item !== undefined)]);
+                setCurrentDate(data.nextDate);
+                setCurrentCategoryIndex(data.nextCategoryIndex);
+                setIsComplete(data.isComplete);
             }
         } else {
-            const prevDate = new Date(currentDate);
-            prevDate.setDate(prevDate.getDate() - 1);
-            setCurrentDate(prevDate);
-            setCurrentCategoryIndex(0);
+            setArticles(prev => ({
+                ...prev,
+                articles: []
+            }));
         }
+
     }
 
     useEffect(() => {
@@ -77,24 +79,11 @@ export default function Details() {
             const swipe = localStorage.getItem("swipestatus");
             setSwipeStatus(swipe);
             if (typeof fetchWithArticleId !== "string") return;
-            const mainArticle = await fetchArticles('', currentDate, fetchWithArticleId as string);
-            if (mainArticle.status === 200 && typeof mainArticle.msg === 'object' && mainArticle.msg.length !== 0) {
-                setArticles(mainArticle.msg);
-            }
+            await fetchContent('', fetchWithArticleId as string);
             setLoaded(false);
         };
         loadInitial();
     }, [fetchWithArticleId]);
-
-    useEffect(() => {
-        const triggerFetch = async () => {
-            setLoaded(true);
-            const category = categories[currentCategoryIndex];
-            await fetchContent(category, artId);
-            setLoaded(false);
-        }
-        triggerFetch();
-    }, [currentCategoryIndex])
 
 
     const handleReachEnd = async (articleId: string, category: string) => {
@@ -103,7 +92,7 @@ export default function Details() {
         if (swiperRef.current && typeof swiperRef.current.activeIndex === "number") {
             setActiveIndex(swiperRef.current.activeIndex);
         }
-        setArtId(articleId)
+        // setArtId(articleId)
         await fetchContent(category, articleId)
         setLoaded(false);
     };
@@ -123,14 +112,14 @@ export default function Details() {
                     mousewheel={true}
                     onSlideChange={(swiper) => {
                         if (swiper.activeIndex === swiper.slides.length - 1) {
-                            handleReachEnd(articles[swiper.activeIndex].articleId as string, articles[swiper.activeIndex].summary?.category as string)
+                            handleReachEnd(article.articles[swiper.activeIndex].articleId as string, article.articles[swiper.activeIndex].summary?.category as string)
                         }
                     }}
                     initialSlide={activeIndex}
                     modules={[Mousewheel, Navigation]}
                     className="w-full h-screen md:h-screen px-4 md:col-span-4 md:col-sart-2"
                 >
-                    {articles.map((item: Article, index: number) => (
+                    {article.articles.map((item: Article, index: number) => (
                         <SwiperSlide key={`${item.title}_${index}_slide`} className="">
                             <NewsDetails articles={item} />
                         </SwiperSlide>
@@ -145,7 +134,7 @@ export default function Details() {
                 </div>}
             </div>
         </div>
-        {!articles.length && loader == false && typeof articles !== 'object' && <Alert variant="destructive">
+        {!article.articles.length && loader == false && typeof article.articles !== 'object' && <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>

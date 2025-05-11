@@ -1,66 +1,78 @@
-import { NextRequest, NextResponse } from "next/server";
-// import { QuerySnapshot, DocumentData } from "firebase-admin/firestore";
-import { db } from "../../../config/firebaseAdmin";
+import { NextResponse } from 'next/server';
 import { Article } from "@/src/interface/article";
-import { DocumentSnapshot } from "firebase-admin/firestore";
-// import { BUSINESS, ENTERTAINMENT, HEALTH, OTHERS, POLITICS, SCIENCE, SPORTS, TECHNOLOGY, WORLD } from "@/src/utils/contants";
+import { fetchArticleById, fetchArticlesForCategoryAndDate } from './helper';
 
-const docPath = "inbits_collection/us/articles";
-// const category = [POLITICS, SPORTS, ENTERTAINMENT, TECHNOLOGY, BUSINESS, HEALTH, SCIENCE, WORLD, OTHERS];
-const pageSize = 10;
-let lastVisible: DocumentSnapshot | null = null;
+const MAX_DAYS_BACK = 20;
+const MAX_ARTICLES = 10;
 
-export async function GET(req: NextRequest) {
+export async function POST(request: Request) {
     try {
-        const { searchParams } = new URL(req.url);
-        const paramDate = searchParams.get("currentDate") as string;
-        const currentCategory = searchParams.get("category") as string;
-        const articleId = searchParams.get("articleId") as string;
-        const currentDate = new Date(paramDate);
-        // const modifiedCategory = category.map(item => item !== currentCategory ? item : undefined).filter(data => data !== undefined);
+        const { currentDate, excludeIds = [], categories = [], selectedCategory, currentCategoryIndex = 0, articleId, slug } = await request.json();
 
-        // //Get latest categories
-        // if (!modifiedCategory.includes(currentCategory)) {
-        //     currentCategory = modifiedCategory[0];
-        // }
+        const finalArticles: Article[] = [];
+        const nextDate = new Date(currentDate);
+        let nextCategoryIndex = currentCategoryIndex;
+        let isComplete = false;
+        const seenIds = new Set(excludeIds);
+        let totalDaysBack = 0;
+        let nextSelectedCategory = selectedCategory;
+        console.log(slug);
 
-        // if (modifiedCategory.length) {
-        //     currentDate.setDate(currentDate.getDate() - 1);
-        // }
+        const addArticles = (articles: Article[]) => {
+            for (const article of articles) {
+                if (!seenIds.has(article.articleId)) {
+                    seenIds.add(article.articleId);
+                    finalArticles.push(article);
+                    if (finalArticles.length >= MAX_ARTICLES) return true;
+                }
+            }
+            return false;
+        };
 
-        const start = new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth(),
-            currentDate.getDate() - 1,
-            0, 0, 0, 0
-        ).toISOString();
-
-        const end = new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth(),
-            currentDate.getDate(),
-            23, 59, 59, 999
-        ).toISOString();
-
-        let query = await db.collection(docPath)
-            .where("summary.category", "==", currentCategory)
-            .where("publishedAt", ">=", start)
-            .where("publishedAt", "<=", end)
-            .where("articleId", "!=", articleId)
-            .orderBy("publishedAt", "desc")
-            .limit(pageSize)
-
-        if (lastVisible) {
-            query = query.startAfter(lastVisible);
+        if (articleId) {
+            const mainArticle = await fetchArticleById(articleId);
+            if (mainArticle && mainArticle.length && !seenIds.has(mainArticle[0].articleId)) {
+                finalArticles.push(mainArticle[0]);
+                seenIds.add(mainArticle[0].articleId);
+                nextSelectedCategory = mainArticle[0].summary?.category;
+            }
         }
 
-        const snapshot = await query.get();
-        lastVisible = snapshot.docs[snapshot.docs.length - 1] ?? null;
+        if (nextSelectedCategory && finalArticles.length < MAX_ARTICLES) {
+            const articles = await fetchArticlesForCategoryAndDate(nextSelectedCategory, nextDate);
+            addArticles(articles)
+        }
 
-        const result = snapshot.docs.map(doc => ({ ...doc.data() } as Article));
+        while (finalArticles.length < MAX_ARTICLES && !isComplete && totalDaysBack <= MAX_DAYS_BACK) {
+            const currentCategory = categories[nextCategoryIndex];
+
+            //if (currentCategory !== nextSelectedCategory) {
+            const articles = await fetchArticlesForCategoryAndDate(currentCategory, nextDate);
+            addArticles(articles)
+            //}
+
+            nextCategoryIndex++;
+
+            if (nextCategoryIndex >= categories.length) {
+                nextCategoryIndex = 0;
+                nextDate.setDate(nextDate.getDate() - 1);
+                totalDaysBack++;
+            }
+        }
+
+        if (totalDaysBack > MAX_DAYS_BACK || finalArticles.length < MAX_ARTICLES) {
+            isComplete = true;
+        }
+
         return NextResponse.json({
             status: 200,
-            msg: result
+            msg: {
+                articles: finalArticles,
+                nextDate: nextDate,
+                nextCategoryIndex: 0,
+                isComplete
+            }
+
         });
 
     } catch (error) {

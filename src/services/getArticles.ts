@@ -32,7 +32,7 @@ export const fetchArticleById = async (articleId: string): Promise<{ msg: Array<
 // }
 
 
-export const fetchArticles = async (category: string, currentDate: Date, articleId: string): Promise<{ msg: Array<Article> | string, status: number }> => {
+/*export const fetchArticles = async (category: string, currentDate: Date, articleId: string): Promise<{ msg: { articles: Array<Article>, nextDate: Date, nextCategoryIndex: number, isComplete: boolean } | string, status: number }> => {
     try {
         const isoDate = currentDate.toISOString();
         const slug = articleId.substring(0, articleId.lastIndexOf('--')) || articleId.substring(0, articleId.lastIndexOf('-'));
@@ -42,8 +42,44 @@ export const fetchArticles = async (category: string, currentDate: Date, article
         }
 
         const response = await fetch(`${APP_BASE_URL}/api/article/details/?category=${category}&articleId=${articleId}&currentDate=${encodeURIComponent(isoDate)}&slug=${slug}`);
-        const result: { msg: Array<Article>, status: number } = await response.json();
+        const result: { msg: { articles: Array<Article>, nextDate: Date, nextCategoryIndex: number, isComplete: boolean }, status: number } = await response.json();
         return result;
+
+    } catch (error) {
+        if (error instanceof Error) {
+            return { msg: error.message, status: 500 }
+        }
+        return { msg: "Error: Not able to fetch latest data", status: 500 }
+    }
+}*/
+
+export const fetchArticles = async (payload: {
+    currentDate: Date,
+    excludeIds: string[],
+    categories: string[],
+    selectedCategory: string,
+    currentCategoryIndex: number,
+    articleId: string,
+    slug?: string,
+}): Promise<{ msg: { articles: Array<Article>, nextDate: Date, nextCategoryIndex: number, isComplete: boolean } | string, status: number }> => {
+    try {
+        //const isoDate = payload.currentDate.toISOString();
+        //?category=${category}&articleId=${articleId}&currentDate=${encodeURIComponent(isoDate)}&slug=${slug}
+
+        payload.slug = payload.articleId.substring(0, payload.articleId.lastIndexOf('--')) || payload.articleId.substring(0, payload.articleId.lastIndexOf('-'));
+        if (payload.articleId !== '') {
+            payload.articleId = payload.articleId.split(/--?/).pop() || '';
+        }
+
+        const response = await fetch(`${APP_BASE_URL}/api/article/details/category`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        const result: { msg: { articles: Array<Article>, nextDate: Date, nextCategoryIndex: number, isComplete: boolean }, status: number } = await response.json();
+        return result;
+
     } catch (error) {
         if (error instanceof Error) {
             return { msg: error.message, status: 500 }
