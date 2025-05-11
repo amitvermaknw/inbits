@@ -6,6 +6,8 @@ import MiddlePannel from "./component/MiddlePannel";
 import { AlertCircle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
 import { Article, ArticleProps } from "@/src/interface/article";
+import { generateMetadata } from "@/src/lib/metadata";
+import { splitIntoChunks } from "@/src/utils/utils";
 
 const getSideArticle = (props: ArticleProps): Array<Article> => {
     const sideArticle: Array<Article> = [];
@@ -84,6 +86,12 @@ const getLatestArticle = (props: ArticleProps): Array<Article> => {
         }
     }
 
+    generateMetadata({
+        title: latestArticle[0].title,
+        summary: splitIntoChunks(latestArticle[0].description),
+        image: latestArticle[0].urlToImage
+    });
+
     return latestArticle
 }
 
@@ -95,8 +103,10 @@ export default async function HomePage() {
         sidebarArticle = await getSideArticle(result.msg);
 
     let latestArticle: Array<Article> = []
-    if (typeof result.msg === 'object' && result.msg !== null)
+    if (typeof result.msg === 'object' && result.msg !== null) {
         latestArticle = await getLatestArticle(result.msg);
+    }
+
 
 
     return (

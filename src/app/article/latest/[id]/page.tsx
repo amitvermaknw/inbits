@@ -12,9 +12,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from "swiper";
 import { Mousewheel, Navigation } from 'swiper/modules';
 import BarLoader from '@/src/components/ui/barloader';
+import { PageLoader } from '@/src/components/ui/pageloader';
+import { useCallback } from 'react';
+import { generateMetadata } from '@/src/lib/metadata';
+import { splitIntoChunks } from '@/src/utils/utils';
 
 const categories = [POLITICS, SPORTS, ENTERTAINMENT, TECHNOLOGY, BUSINESS, HEALTH, SCIENCE, WORLD, OTHERS];
-
 
 export default function Details() {
     const params = useParams();
@@ -23,17 +26,14 @@ export default function Details() {
     const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [loader, setLoaded] = useState(false);
-    // const [artId, setArtId] = useState('');
     const swiperRef = useRef<SwiperCore | null>(null);
     const [activeIndex, setActiveIndex] = useState(0);
-    // const [trackCategories, setTrackCategories] = useState<string[]>([]);
-    // const trackCategory = new Set();
     const [swipeStatus, setSwipeStatus] = useState<string | null>(null);
     const [excludeIds, setExcludeIds] = useState<string[]>([]);
     const [isComplete, setIsComplete] = useState(false);
 
 
-    const fetchContent = async (selectedCategory: string, articleId: string) => {
+    const fetchContent = useCallback(async (selectedCategory: string, articleId: string) => {
         if (isComplete) return;
 
         const nextArticles = await fetchArticles({
@@ -63,6 +63,11 @@ export default function Details() {
                 setCurrentDate(data.nextDate);
                 setCurrentCategoryIndex(data.nextCategoryIndex);
                 setIsComplete(data.isComplete);
+                generateMetadata({
+                    title: data.articles[0].title,
+                    summary: splitIntoChunks(data.articles[0].description),
+                    image: data.articles[0].urlToImage
+                });
             }
         } else {
             setArticles(prev => ({
@@ -71,7 +76,7 @@ export default function Details() {
             }));
         }
 
-    }
+    }, [currentCategoryIndex, currentDate, excludeIds, isComplete]);
 
     useEffect(() => {
         const loadInitial = async () => {
@@ -83,7 +88,7 @@ export default function Details() {
             setLoaded(false);
         };
         loadInitial();
-    }, [fetchWithArticleId]);
+    }, [fetchWithArticleId, fetchContent]);
 
 
     const handleReachEnd = async (articleId: string, category: string) => {
@@ -92,7 +97,6 @@ export default function Details() {
         if (swiperRef.current && typeof swiperRef.current.activeIndex === "number") {
             setActiveIndex(swiperRef.current.activeIndex);
         }
-        // setArtId(articleId)
         await fetchContent(category, articleId)
         setLoaded(false);
     };
@@ -126,6 +130,7 @@ export default function Details() {
                     ))}
                 </Swiper>
                 <BarLoader loading={loader} />
+                {loader && <PageLoader />}
                 {!swipeStatus && <div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-700 animate-bounce z-50 md:hidden">
                     <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />

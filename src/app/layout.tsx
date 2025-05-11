@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/src/components/layout/Header";
 import BottomNav from "@/src/components/nav/BottomNav";
 import ArticleProvider from "./features/context/ArticleContext";
+import { generateMetadata } from "@/src/lib/metadata";
 
 
 const geistSans = Geist({
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Best Daily News - Politics, Tech, World',
+  title: 'Best Daily News in 60 Seconds - Politics, Sports, Business, Health, Entertainment, Science, Tech, World',
   description: 'Stay informed with the latest political, tech, and world news in 60 seconds. Fast, reliable, and always up to date.',
   keywords: ['news', 'politics', 'technology', 'world news', 'sports'],
   robots: 'index, follow',
@@ -35,11 +36,23 @@ export const metadata: Metadata = {
         url: '/ogimage.png',
         width: 1200,
         height: 630,
-        alt: 'Daily News Thumbnail',
+        alt: 'InBits News Summary',
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'InBits - Best Daily News in 60 seconds',
+    description: 'Latest and breaking news across categories in 60 seconds.',
+    images: ['/ogimage.png'],
+  },
 };
+
+generateMetadata({
+  title: 'Best Daily News in 60 seconds',
+  summary: 'Latest and breaking news across categories in 60 seconds.',
+  image: '/ogimage.png'
+});
 
 export default function RootLayout({
   children,

@@ -1,4 +1,4 @@
-import { Skeleton } from "@/src/components/ui/skeleton";
+import { PageLoader } from "@/src/components/ui/pageloader";
 import { Article } from "@/src/interface/article";
 import Image from 'next/image';
 
@@ -28,6 +28,6 @@ export default function MiddlePannel(props: { art: Array<Article> }) {
                     </article>
                 })}
             </div>
-        </section > : <Skeleton />
+        </section > : <PageLoader />
     )
 }

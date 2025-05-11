@@ -1,13 +1,14 @@
 'use client';
 
-import { Skeleton } from "@/src/components/ui/skeleton";
 import { Article } from "@/src/interface/article";
-
 import Image from 'next/image';
 import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import { useArticleContext } from "@/src/hooks/useArticleContext";
 import { useRouter } from "next/navigation";
+import { PageLoader } from "@/src/components/ui/pageloader";
+import { generateMetadata } from "@/src/lib/metadata";
+import { splitIntoChunks } from "@/src/utils/utils";
 
 
 export default function ClientPage({ allArticles }: { allArticles: Article[] }) {
@@ -18,6 +19,12 @@ export default function ClientPage({ allArticles }: { allArticles: Article[] }) 
         setArticles(allArticles);
         router.push(`/article/entertainment/${id}`);
     };
+
+    generateMetadata({
+        title: allArticles[0].title,
+        summary: splitIntoChunks(allArticles[0].description),
+        image: allArticles[0].urlToImage
+    });
 
     return (
         allArticles.length ? <section className="md:py-4">
@@ -50,6 +57,8 @@ export default function ClientPage({ allArticles }: { allArticles: Article[] }) 
                         </AlertDescription>
                     </Alert>}
             </div>
-        </section > : <Skeleton />
+        </section > : <div className="flex items-center space-x-4">
+            <PageLoader />
+        </div>
     )
 }

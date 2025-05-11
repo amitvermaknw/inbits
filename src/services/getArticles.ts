@@ -63,9 +63,6 @@ export const fetchArticles = async (payload: {
     slug?: string,
 }): Promise<{ msg: { articles: Array<Article>, nextDate: Date, nextCategoryIndex: number, isComplete: boolean } | string, status: number }> => {
     try {
-        //const isoDate = payload.currentDate.toISOString();
-        //?category=${category}&articleId=${articleId}&currentDate=${encodeURIComponent(isoDate)}&slug=${slug}
-
         payload.slug = payload.articleId.substring(0, payload.articleId.lastIndexOf('--')) || payload.articleId.substring(0, payload.articleId.lastIndexOf('-'));
         if (payload.articleId !== '') {
             payload.articleId = payload.articleId.split(/--?/).pop() || '';

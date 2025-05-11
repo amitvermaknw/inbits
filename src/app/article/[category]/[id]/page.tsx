@@ -11,6 +11,8 @@ import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
 import BarLoader from '@/src/components/ui/barloader';
 import { Article } from '@/src/interface/article';
 import NewsDetails from '@/src/app/features/details/component/NewsDetails';
+import { generateMetadata } from '@/src/lib/metadata';
+import { splitIntoChunks } from '@/src/utils/utils';
 
 export default function ArticleCategory() {
     const swiperRef = useRef<SwiperCore | null>(null);
@@ -27,12 +29,9 @@ export default function ArticleCategory() {
     };
 
     useEffect(() => {
-
         if (!articles.length) router.push(`/${category}`);
-
         const swipeStatus = localStorage.getItem("swipestatus") || null;
         setSwipeStatus(swipeStatus)
-
         setLoaded(true);
         let articleId = null;
         if (typeof id === 'string') {
@@ -44,11 +43,16 @@ export default function ArticleCategory() {
             const restArticle = [...articles.slice(0, index), ...articles.slice(index + 1)];
             const reorderArticle = [clickedArticle, ...restArticle];
             setNextArticles(reorderArticle);
-
         }
-        setLoaded(false);
 
-    }, [category, id])
+        generateMetadata({
+            title: articles[0].title,
+            summary: splitIntoChunks(articles[0].description),
+            image: articles[0].urlToImage
+        });
+
+        setLoaded(false);
+    }, [articles, category, id, router])
 
     return (<>
         <div className='md:max-w-4xl mx-auto pb-8 pt-4 p-2 h-full'>

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Skeleton } from "@/src/components/ui/skeleton";
 import { Article } from "@/src/interface/article";
+import { PageLoader } from "@/src/components/ui/pageloader";
 
 export default function LatestNews(props: { art: Array<Article> }) {
     return (
@@ -29,6 +29,6 @@ export default function LatestNews(props: { art: Array<Article> }) {
                     </article>
                 })}
             </div>
-        </section > : <Skeleton />
+        </section > : <PageLoader />
     )
 };

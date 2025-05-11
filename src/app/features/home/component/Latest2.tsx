@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 // import { cn } from "@/src/lib/utils";
 import { Card, CardContent, CardTitle } from "@/src/components/ui/card";
-import { Skeleton } from "@/src/components/ui/skeleton";
+import { PageLoader } from "@/src/components/ui/pageloader";
 // import { Button } from "@/src/components/ui/button";
 
 interface NewsItem {
@@ -74,7 +74,7 @@ export default function LatestNews2() {
             </div> */}
         </section>
     ) : (
-        <Skeleton className="h-40 w-full" />
+        <PageLoader />
     );
     // return (
     //     <div className={cn("space-y-6", latest.className)}>
