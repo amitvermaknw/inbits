@@ -92,11 +92,14 @@ export async function GET(req: Request) {
                     }
                 });
                 await Promise.all(batchPromises);
-            }
 
-            return NextResponse.json({ message: 'Articles saved to Firebase', count: results.articles.length, code: 200 }, { status: 200 });
+                return NextResponse.json({ message: 'Articles saved to Firebase', count: results.articles.length, code: 200 }, { status: 200 });
+            } else {
+                console.log(`No record fetched from News API = ${results}`)
+                return NextResponse.json({ message: typeof results === 'object' ? JSON.stringify(results) : results, count: results.articles.length, code: 400 }, { status: 400 });
+            }
         } else {
-            return NextResponse.json({ message: 'Failed to save article response', count: 0, code: 400 }, { status: 400 });
+            return NextResponse.json({ message: 'Failed to get article from News API', count: result, code: 400 }, { status: 400 });
         }
     } catch (error) {
         console.error(error);
