@@ -30,7 +30,6 @@ export default function Pannel() {
                         alt="panel"
                         width={300}
                         height={300}
-                        objectFit="cover"
                         className="object-cover rounded-t-lg rounded-b-lg mb-4"
                     />
                 </SwiperSlide>
@@ -40,7 +39,6 @@ export default function Pannel() {
                         alt="panel"
                         width={300}
                         height={300}
-                        objectFit="cover"
                         className="object-cover rounded-t-lg rounded-b-lg mb-4"
                     />
                 </SwiperSlide>
@@ -50,7 +48,6 @@ export default function Pannel() {
                         alt="panel"
                         width={300}
                         height={300}
-                        objectFit="cover"
                         className="object-cover rounded-t-lg rounded-b-lg mb-4"
                     />
                 </SwiperSlide>

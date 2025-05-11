@@ -51,9 +51,8 @@ export default function LatestNews2() {
                                 <Image
                                     src={item.imageUrl}
                                     alt={item.imageAlt}
-                                    width={56} // Adjusted width
-                                    height={56} // Adjusted height
-                                    objectFit="cover"
+                                    width={56}
+                                    height={56}
                                     className="rounded-lg w-20 h-22"
                                 />
                             </div>

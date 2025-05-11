@@ -37,7 +37,6 @@ export default function ClientPage({ allArticles }: { allArticles: Article[] }) 
                                     alt={item.title}
                                     width={60}
                                     height={50}
-                                    objectFit="cover"
                                     className="object-cover rounded-t-lg rounded-b-lg w-25 h-20"
                                 />
                             </div>

@@ -18,7 +18,6 @@ export default function NewsDetails({ articles }: ArticleDetails) {
                     alt="Article image"
                     width={50}
                     height={300}
-                    objectFit="cover"
                     className="object-cover rounded-t-lg rounded-b-lg h-64 w-full md:h-96"
                 />
             </div>

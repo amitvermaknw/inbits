@@ -39,7 +39,6 @@ export default function ClientPolitics({ allArticles }: { allArticles: Article[]
                                     alt={item.title}
                                     width={50}
                                     height={50}
-                                    objectFit="cover"
                                     className="object-cover rounded-t-lg rounded-b-lg h-52 w-full md:h-72"
                                 />
                             </div>

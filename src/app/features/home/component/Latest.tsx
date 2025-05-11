@@ -17,7 +17,6 @@ export default function LatestNews(props: { art: Array<Article> }) {
                                     alt="Article image"
                                     width={60}
                                     height={50}
-                                    objectFit="cover"
                                     className="object-cover rounded-t-lg rounded-b-lg w-25 h-20"
                                 />
                             </div>

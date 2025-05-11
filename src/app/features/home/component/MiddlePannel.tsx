@@ -16,7 +16,6 @@ export default function MiddlePannel(props: { art: Array<Article> }) {
                                     alt={item.title}
                                     width={50}
                                     height={50}
-                                    objectFit="cover"
                                     className="object-cover rounded-t-lg rounded-b-lg h-35 max-h-40 w-full"
                                 />
                             </div>
