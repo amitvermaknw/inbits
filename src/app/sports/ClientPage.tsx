@@ -27,7 +27,7 @@ export default function ClientPage({ allArticles }: { allArticles: Article[] }) 
 
     return (
         allArticles.length ? <section className="md:py-4">
-            <h1 className="p-2 mb-2 text-left font-sans font-bold md:text-md xl:text-xl">Sports</h1>
+            <h1 className="p-2 text-left font-sans font-bold md:text-md xl:text-xl">Sports</h1>
             <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 p-2">
                 {typeof allArticles === 'object' ? allArticles.map((item: Article, index: number) => {
                     return <article className="w-full h-full" key={`${item.title}_${index}`}>

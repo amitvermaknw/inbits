@@ -81,7 +81,6 @@ export async function GET(req: Request) {
                                     }
 
                                 } else {
-                                    console.log('Failed to extract article content.', content);
                                     await db.collection(logsDocPath).add({ message: `Not able to fetch article content=${content}` });
                                 }
                             }
@@ -95,14 +94,13 @@ export async function GET(req: Request) {
 
                 return NextResponse.json({ message: 'Articles saved to Firebase', count: results.articles.length, code: 200 }, { status: 200 });
             } else {
-                console.log(`No record fetched from News API = ${results}`)
+                console.log(`No record fetched from News API in result`)
                 return NextResponse.json({ message: typeof results === 'object' ? JSON.stringify(results) : results, count: results.articles.length, code: 400 }, { status: 400 });
             }
         } else {
             return NextResponse.json({ message: 'Failed to get article from News API', count: result, code: 400 }, { status: 400 });
         }
     } catch (error) {
-        console.error(error);
         if (error instanceof Error)
             return NextResponse.json({ message: error.message, code: 500 }, { status: 500 });
     }

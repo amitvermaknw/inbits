@@ -8,7 +8,7 @@ export interface Article {
     urlToImage: string,
     publishedAt: string,
     content: string | null,
-    summary?: { category: string, summary: string },
+    summary?: { category: string, summary: string, title: string },
     country?: string | null,
     slug?: string
 }

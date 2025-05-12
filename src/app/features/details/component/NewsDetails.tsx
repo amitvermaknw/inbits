@@ -22,6 +22,9 @@ export default function NewsDetails({ articles }: ArticleDetails) {
                 />
             </div>
             <div className="flex-1 min-w-0 ms-2 mt-2">
+                <div className="text-gray-900 font-bold mb-2">{articles.summary?.title}</div>
+            </div>
+            <div className="flex-1 min-w-0 ms-2 mt-2">
                 <div className="text-gray-900 font-normal mb-2">{articles.summary?.summary}</div>
             </div>
 
