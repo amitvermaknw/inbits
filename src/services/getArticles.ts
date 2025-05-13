@@ -88,6 +88,7 @@ export const fetchArticles = async (payload: {
 export const fetchArticleByCategory = async (category: string, currentDate: Date): Promise<{ msg: Array<Article> | string, status: number }> => {
     try {
         const isoDate = currentDate.toISOString();
+        console.log(`fetchArticleByCategory = ${APP_BASE_URL}/api/article/${category}/?category=${category}&currentDate=${encodeURIComponent(isoDate)}`)
         const response = await fetch(`${APP_BASE_URL}/api/article/${category}/?category=${category}&currentDate=${encodeURIComponent(isoDate)}`);
         const result: { msg: Array<Article>, status: number } = await response.json();
         return result;

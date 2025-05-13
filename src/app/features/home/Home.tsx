@@ -97,7 +97,7 @@ const getLatestArticle = (props: ArticleProps): Array<Article> => {
 }
 
 export default async function HomePage() {
-    const result = await fetchLatestNews('start', 40);
+    const result = await fetchLatestNews('start', 70);
 
     let sidebarArticle: Array<Article> = []
     if (typeof result.msg === 'object' && result.msg !== null)
