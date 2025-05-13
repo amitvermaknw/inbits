@@ -67,6 +67,11 @@ export async function GET(req: NextRequest) {
             new Map(articles.map(article => [article.articleId, article])).values()
         );
 
+        console.log("Articles Categories", {
+            status: 200,
+            msg: uniqueArticles
+        })
+
         return NextResponse.json({
             status: 200,
             msg: uniqueArticles

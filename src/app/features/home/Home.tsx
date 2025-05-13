@@ -108,7 +108,7 @@ export default async function HomePage() {
         latestArticle = await getLatestArticle(result.msg);
     }
 
-
+    console.log("Home", result ? JSON.stringify(result) : result)
 
     return (
         <>
