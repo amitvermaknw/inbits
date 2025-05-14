@@ -7,8 +7,8 @@ import { AlertCircle } from "lucide-react"
 import { useArticleContext } from "@/src/hooks/useArticleContext";
 import { useRouter } from "next/navigation";
 import { PageLoader } from "@/src/components/ui/pageloader";
-import { generateMetadata } from "@/src/lib/metadata";
-import { splitIntoChunks } from "@/src/utils/utils";
+// import { generateMetadata } from "@/src/lib/metadata";
+// import { splitIntoChunks } from "@/src/utils/utils";
 
 
 export default function ClientPolitics({ allArticles }: { allArticles: Article[] }) {
@@ -20,11 +20,13 @@ export default function ClientPolitics({ allArticles }: { allArticles: Article[]
         router.push(`/article/politics/${id}`);
     };
 
-    generateMetadata({
-        title: allArticles[0].title,
-        summary: splitIntoChunks(allArticles[0].description),
-        image: allArticles[0].urlToImage
-    });
+    console.log("Politics page loaded=", allArticles.length ? JSON.stringify(allArticles) : allArticles);
+
+    // generateMetadata({
+    //     title: allArticles[0].title,
+    //     summary: splitIntoChunks(allArticles[0].description),
+    //     image: allArticles[0].urlToImage
+    // });
 
     return (
         allArticles.length ? <section className="md:py-4">

@@ -6,8 +6,8 @@ import MiddlePannel from "./component/MiddlePannel";
 import { AlertCircle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
 import { Article, ArticleProps } from "@/src/interface/article";
-import { generateMetadata } from "@/src/lib/metadata";
-import { splitIntoChunks } from "@/src/utils/utils";
+// import { generateMetadata } from "@/src/lib/metadata";
+// import { splitIntoChunks } from "@/src/utils/utils";
 
 const getSideArticle = (props: ArticleProps): Array<Article> => {
     const sideArticle: Array<Article> = [];
@@ -86,18 +86,19 @@ const getLatestArticle = (props: ArticleProps): Array<Article> => {
         }
     }
 
-    if (latestArticle.length) {
-        generateMetadata({
-            title: latestArticle[0].title,
-            summary: splitIntoChunks(latestArticle[0].description),
-            image: latestArticle[0].urlToImage
-        });
-    }
+    // if (latestArticle.length) {
+    //     generateMetadata({
+    //         title: latestArticle[0].title,
+    //         summary: splitIntoChunks(latestArticle[0].description),
+    //         image: latestArticle[0].urlToImage
+    //     });
+    // }
     return latestArticle
 }
 
 export default async function HomePage() {
     const result = await fetchLatestNews('start', 70);
+    console.log("Home", result ? JSON.stringify(result) : result)
 
     let sidebarArticle: Array<Article> = []
     if (typeof result.msg === 'object' && result.msg !== null)
@@ -107,8 +108,6 @@ export default async function HomePage() {
     if (typeof result.msg === 'object' && result.msg !== null) {
         latestArticle = await getLatestArticle(result.msg);
     }
-
-    console.log("Home", result ? JSON.stringify(result) : result)
 
     return (
         <>
