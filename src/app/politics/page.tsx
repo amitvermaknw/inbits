@@ -6,8 +6,6 @@ import { PageLoader } from "@/src/components/ui/pageloader";
 export default async function Politics() {
     const result = await fetchArticleByCategory("politics", new Date());
 
-    console.log("Politics", result ? JSON.stringify(result) : result);
-
     return (
         result.msg.length && typeof result.msg === 'object' ? <ClientPolitics allArticles={result.msg} /> : <PageLoader />
     )

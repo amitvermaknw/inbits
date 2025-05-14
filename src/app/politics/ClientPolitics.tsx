@@ -20,8 +20,6 @@ export default function ClientPolitics({ allArticles }: { allArticles: Article[]
         router.push(`/article/politics/${id}`);
     };
 
-    console.log("Politics page loaded=", allArticles.length ? JSON.stringify(allArticles) : allArticles);
-
     // generateMetadata({
     //     title: allArticles[0].title,
     //     summary: splitIntoChunks(allArticles[0].description),

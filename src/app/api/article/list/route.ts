@@ -65,11 +65,6 @@ export async function GET(req: NextRequest) {
             }
         }
 
-        console.log("Articles politics", {
-            status: 200,
-            msg: politics
-        })
-
         return NextResponse.json({
             status: 200,
             msg: {
