@@ -22,7 +22,8 @@ export default function ClientPage({ allArticles }: { allArticles: Article[] }) 
     generateMetadata({
         title: allArticles[0].title,
         summary: splitIntoChunks(allArticles[0].description),
-        image: allArticles[0].urlToImage
+        image: allArticles[0].urlToImage,
+        url: allArticles[0].url
     });
 
     return (
@@ -30,7 +31,7 @@ export default function ClientPage({ allArticles }: { allArticles: Article[] }) 
             <h1 className="p-2 text-left font-sans font-bold md:text-md xl:text-xl">Sports</h1>
             <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 p-2">
                 {typeof allArticles === 'object' ? allArticles.map((item: Article, index: number) => {
-                    return <article className="w-full h-full" key={`${item.title}_${index}`}>
+                    return item.urlToImage && <article className="w-full h-full" key={`${item.title}_${index}`}>
                         <a onClick={() => handleArticleClick(item.slug as string)}
                             className="flex items-center bg-white border-b border-gray-200 h-full">
                             <div className="flex-shrink-0 ml-1 mb-2">

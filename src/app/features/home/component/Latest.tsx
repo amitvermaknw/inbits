@@ -1,14 +1,23 @@
 import Image from "next/image";
 import { Article } from "@/src/interface/article";
 import { PageLoader } from "@/src/components/ui/pageloader";
+import { generateMetadata } from "@/src/lib/metadata";
+import { splitIntoChunks } from "@/src/utils/utils";
 
 export default function LatestNews(props: { art: Array<Article> }) {
+    generateMetadata({
+        title: props.art.length ? props.art[0].title : 'Best Daily News in 60 seconds',
+        summary: splitIntoChunks(props.art[0].description),
+        image: props.art[0].urlToImage,
+        url: props.art[0].url
+    });
+
     return (
         props.art.length ? <section className="py-4">
             <h1 className="md:mb-4 ml-2 text-left font-sans font-bold md:text-md xl:text-xl">Latest</h1>
             <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-2 md:gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2">
                 {props.art.map((item: Article, index: number) => {
-                    return <article className="w-full h-full" key={`${item.title}_${index}`}>
+                    return item.urlToImage && <article className="w-full h-full" key={`${item.title}_${index}`}>
                         <a href={`/article/latest/${item.slug}`}
                             className="flex items-center bg-white border-b border-gray-200 h-full">
                             <div className="flex-shrink-0 ml-1 mb-2">

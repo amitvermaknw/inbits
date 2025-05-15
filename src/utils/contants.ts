@@ -8,3 +8,5 @@ export const HEALTH = 'health';
 export const SCIENCE = 'science';
 export const WORLD = 'world';
 export const OTHERS = 'others';
+
+export const HOME_PAGE_RECORDS = 70;

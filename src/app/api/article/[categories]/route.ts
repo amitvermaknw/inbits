@@ -36,8 +36,13 @@ export async function GET(req: NextRequest) {
                 currentCategory = articles[0].summary?.category as string
             }
 
+            let categories = [currentCategory];
+            if (currentCategory === 'politics') {
+                categories = ['politics', 'world']
+            }
+
             let query = await db.collection(docPath)
-                .where("summary.category", "==", currentCategory)
+                .where("summary.category", "in", categories)
                 .where("publishedAt", ">=", start)
                 .where("publishedAt", "<=", end)
                 .orderBy("publishedAt", "desc")

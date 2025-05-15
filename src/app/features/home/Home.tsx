@@ -6,6 +6,7 @@ import MiddlePannel from "./component/MiddlePannel";
 import { AlertCircle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
 import { Article, ArticleProps } from "@/src/interface/article";
+import { HOME_PAGE_RECORDS } from "@/src/utils/contants";
 // import { generateMetadata } from "@/src/lib/metadata";
 // import { splitIntoChunks } from "@/src/utils/utils";
 
@@ -97,7 +98,7 @@ const getLatestArticle = (props: ArticleProps): Array<Article> => {
 }
 
 export default async function HomePage() {
-    const result = await fetchLatestNews('start', 70);
+    const result = await fetchLatestNews('start', HOME_PAGE_RECORDS);
 
     let sidebarArticle: Array<Article> = []
     if (typeof result.msg === 'object' && result.msg !== null)

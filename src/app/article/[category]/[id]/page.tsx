@@ -11,8 +11,6 @@ import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
 import BarLoader from '@/src/components/ui/barloader';
 import { Article } from '@/src/interface/article';
 import NewsDetails from '@/src/app/features/details/component/NewsDetails';
-import { generateMetadata } from '@/src/lib/metadata';
-import { splitIntoChunks } from '@/src/utils/utils';
 
 export default function ArticleCategory() {
     const swiperRef = useRef<SwiperCore | null>(null);
@@ -44,13 +42,6 @@ export default function ArticleCategory() {
             const reorderArticle = [clickedArticle, ...restArticle];
             setNextArticles(reorderArticle);
         }
-
-        generateMetadata({
-            title: articles[0].title,
-            summary: splitIntoChunks(articles[0].description),
-            image: articles[0].urlToImage
-        });
-
         setLoaded(false);
     }, [articles, category, id, router])
 

@@ -31,7 +31,7 @@ export default function ClientPolitics({ allArticles }: { allArticles: Article[]
             <h1 className="p-2 mb-2 text-left font-sans font-bold md:text-md xl:text-xl">Politics</h1>
             <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 p-2">
                 {typeof allArticles === 'object' ? allArticles.map((item: Article, index: number) => {
-                    return <article className="col-span-1 m-auto min-h-full min-w-full  cursor-pointer overflow-hidden rounded-lg pb-2 shadow-lg transition-transform duration-200 hover:translate-y-2" key={`${item.title}_${index}`}>
+                    return item.urlToImage && <article className="col-span-1 m-auto min-h-full min-w-full  cursor-pointer overflow-hidden rounded-lg pb-2 shadow-lg transition-transform duration-200 hover:translate-y-2" key={`${item.title}_${index}`}>
                         <a href="#" className="block w-full h-full" onClick={() => handleArticleClick(item.slug as string)}>
                             <div className="flex-shrink-0">
                                 <Image

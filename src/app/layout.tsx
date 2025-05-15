@@ -39,6 +39,12 @@ export const metadata: Metadata = {
         alt: 'InBits News Summary',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'InBits - Best Daily News in 60 seconds',
+    description: 'Latest and breaking news across categories in 60 seconds.',
+    images: ['https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png'],
   }
 };
 

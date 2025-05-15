@@ -1,8 +1,10 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { Article } from '@/src/interface/article';
+import { generateMetadata } from '@/src/lib/metadata';
+import { splitIntoChunks } from '@/src/utils/utils';
 
 
 interface ArticleDetails {
@@ -10,6 +12,15 @@ interface ArticleDetails {
 }
 
 export default function NewsDetails({ articles }: ArticleDetails) {
+
+    useEffect(() => {
+        generateMetadata({
+            title: articles.title,
+            summary: splitIntoChunks(articles.description),
+            image: articles.urlToImage,
+            url: articles.url
+        });
+    }, [articles])
     return (<>
         <div className="col-span-1 m-auto min-h-full min-w-full  cursor-pointer overflow-hidden rounded-lg pb-2 shadow-lg transition-transform duration-200 hover:translate-y-2" key={`${articles.title}`}>
             <div className="flex-shrink-0 ml-1">

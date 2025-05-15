@@ -10,6 +10,7 @@ import { generateSlug } from '@/src/utils/slug';
 
 const docPath = "inbits_collection/us/articles";
 const logsDocPath = "inbits_collection/newsapi/logs";
+// import res from './newdata.json';
 
 export async function GET(req: Request) {
 
@@ -24,7 +25,6 @@ export async function GET(req: Request) {
     try {
         const result: AxiosResponse<[]> = await axios.get<[]>(`${NEWSAPI_END_POINT}/v2/top-headlines?country=${country}&pageSize=50&category=politics&category=sports&category=business&category=entertainment&category=technology&apiKey=${process.env.NEWSAPI_API_KEY}`);
         if (result.status === 200) {
-            // const results = require("./newdata.json");
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const results: any = result.data;
             if (results.hasOwnProperty("articles")) {

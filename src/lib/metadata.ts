@@ -3,7 +3,8 @@ import { Metadata } from "next";
 export async function generateMetadata(article: {
     title: string,
     summary: string,
-    image: string
+    image: string,
+    url: string
 }): Promise<Metadata> {
 
     return {
@@ -13,13 +14,24 @@ export async function generateMetadata(article: {
         openGraph: {
             title: article?.title,
             description: article?.summary,
-            images: article?.image || 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png',
+            siteName: 'InBits.co',
+            type: 'article',
+            url: article?.url,
+            images: [
+                {
+                    url: article.image || 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png',
+                    width: 1200,
+                    height: 630,
+                    alt: article.title,
+                },
+            ],
+            //images: article?.image || 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png',
         },
         twitter: {
             card: 'summary_large_image',
             title: article?.title,
             description: article?.summary,
-            images: ['https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png'],
+            images: article.image || ['https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png'],
         },
     };
 }

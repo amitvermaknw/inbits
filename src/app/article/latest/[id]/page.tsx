@@ -66,7 +66,8 @@ export default function Details() {
                 generateMetadata({
                     title: data.articles[0].title,
                     summary: splitIntoChunks(data.articles[0].description),
-                    image: data.articles[0].urlToImage
+                    image: data.articles[0].urlToImage,
+                    url: data.articles[0].url
                 });
             }
         } else {
