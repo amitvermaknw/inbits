@@ -10,3 +10,4 @@ export const WORLD = 'world';
 export const OTHERS = 'others';
 
 export const HOME_PAGE_RECORDS = 70;
+export const DATA_REVALIDATION = 3600;

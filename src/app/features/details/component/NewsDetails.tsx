@@ -1,27 +1,18 @@
 'use client'
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { Article } from '@/src/interface/article';
-import { generateMetadata } from '@/src/lib/metadata';
-import { splitIntoChunks } from '@/src/utils/utils';
 import ShareButton from '@/src/components/share/ShareButton';
+import { APP_BASE_URL } from '@/src/utils/config';
 
 
 interface ArticleDetails {
     articles: Article,
+    urlType: string
 }
 
-export default function NewsDetails({ articles }: ArticleDetails) {
-
-    useEffect(() => {
-        generateMetadata({
-            title: articles.title,
-            summary: splitIntoChunks(articles.description),
-            image: articles.urlToImage,
-            url: articles.url
-        });
-    }, [articles])
+export default function NewsDetails({ articles, urlType }: ArticleDetails) {
     return (<>
         <div className="col-span-1 m-auto min-h-full min-w-full  cursor-pointer overflow-hidden rounded-lg pb-2 shadow-lg transition-transform duration-200 hover:translate-y-2" key={`${articles.title}`}>
             <div className="flex-shrink-0 ml-1">
@@ -35,7 +26,7 @@ export default function NewsDetails({ articles }: ArticleDetails) {
             </div>
             <div className="flex-1 min-w-0 ms-2 mt-2">
                 <div className="flex justify-end me-2 mb-1">
-                    <ShareButton title={articles.title} url={`https://inbits.co/article/${articles.slug}`} />
+                    <ShareButton title={articles.title} url={`${APP_BASE_URL}/article/${urlType}/${articles.slug}`} />
                 </div>
                 <div className="text-gray-900 font-bold mb-2">{articles.summary?.title}</div>
 

@@ -1,12 +1,13 @@
 import { Article } from '../interface/article';
 import { APP_BASE_URL } from '../utils/config';
+import { DATA_REVALIDATION } from '../utils/contants';
 
 export const fetchArticleById = async (articleId: string): Promise<{ msg: Array<Article> | string, status: number }> => {
     try {
         const slug = articleId.substring(0, articleId.lastIndexOf('--')) || articleId.substring(0, articleId.lastIndexOf('-'));
-        const id = articleId.split(/--?/).pop() || '';
+        const id = articleId.split(/--/).pop() || '';
 
-        const response = await fetch(`${APP_BASE_URL}/api/article/details/id/?articleId=${id}&slug=${slug}`);
+        const response = await fetch(`${APP_BASE_URL}/api/article/details/id/?articleId=${id}&slug=${slug}`, { next: { revalidate: DATA_REVALIDATION } });
         const result: { msg: Array<Article>, status: number } = await response.json();
         return result;
     } catch (error) {
@@ -71,7 +72,8 @@ export const fetchArticles = async (payload: {
         const response = await fetch(`${APP_BASE_URL}/api/article/details/category`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
+            next: { revalidate: DATA_REVALIDATION }
         });
 
         const result: { msg: { articles: Array<Article>, nextDate: Date, nextCategoryIndex: number, isComplete: boolean }, status: number } = await response.json();
@@ -88,7 +90,7 @@ export const fetchArticles = async (payload: {
 export const fetchArticleByCategory = async (category: string, currentDate: Date): Promise<{ msg: Array<Article> | string, status: number }> => {
     try {
         const isoDate = currentDate.toISOString();
-        const response = await fetch(`${APP_BASE_URL}/api/article/${category}/?category=${category}&currentDate=${encodeURIComponent(isoDate)}`);
+        const response = await fetch(`${APP_BASE_URL}/api/article/${category}/?category=${category}&currentDate=${encodeURIComponent(isoDate)}`, { next: { revalidate: DATA_REVALIDATION } });
         const result: { msg: Array<Article>, status: number } = await response.json();
         return result;
     } catch (error) {
@@ -104,9 +106,12 @@ export const fetchArticleByCategoryAndId = async (category: string, currentDate:
     try {
         const isoDate = currentDate.toISOString();
         const slug = slugId.substring(0, slugId.lastIndexOf('--')) || slugId.substring(0, slugId.lastIndexOf('-'));
-        slugId = slugId.split(/--?/).pop() || '';
+        slugId = slugId.split(/--/).pop() || '';
 
-        const response = await fetch(`${APP_BASE_URL}/api/article/category/?category=${category}&currentDate=${encodeURIComponent(isoDate)}&articleId=${slugId}&slug=${slug}`);
+        const response = await fetch(`${APP_BASE_URL}/api/article/category/?category=${category}&currentDate=${encodeURIComponent(isoDate)}&articleId=${slugId}&slug=${slug}`,
+            {
+                next: { revalidate: DATA_REVALIDATION }
+            });
         const result: { msg: Array<Article>, status: number } = await response.json();
         return result;
     } catch (error) {

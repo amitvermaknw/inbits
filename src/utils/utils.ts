@@ -1,3 +1,5 @@
+import { customAlphabet } from 'nanoid';
+
 export const splitIntoChunks = (text: string, wordsPerChunk = 20): string => {
     if (text) {
         const words = text.trim().split(/\s+/);
@@ -12,4 +14,12 @@ export const splitIntoChunks = (text: string, wordsPerChunk = 20): string => {
         return 'Stay informed with the latest political, tech, and world news in 60 seconds. Fast, reliable, and always up to date.'
     }
 
+}
+
+
+export const slugId = () => {
+    const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const nanoidNoHyphen = customAlphabet(alphabet, 12);
+    const uuId = nanoidNoHyphen();
+    return uuId;
 }

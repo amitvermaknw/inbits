@@ -5,8 +5,8 @@ import { summarized } from '../../summarize';
 import { fetchArticleContent } from '../content/readContent';
 import { NEWSAPI_END_POINT } from '@/src/utils/config';
 import { Article } from '@/src/interface/article';
-import { nanoid } from "nanoid";
 import { generateSlug } from '@/src/utils/slug';
+import { slugId } from '@/src/utils/utils';
 
 const docPath = "inbits_collection/us/articles";
 const logsDocPath = "inbits_collection/newsapi/logs";
@@ -40,7 +40,7 @@ export async function GET(req: Request) {
                             const content = await fetchArticleContent(article.url);
                             if (content.code === 200 && content.msg) {
                                 if (content) {
-                                    const articleId = nanoid(10);
+                                    const articleId = slugId();
                                     const slug = generateSlug(article.title, articleId);
 
                                     if (typeof content.msg === "string" && content.msg.trim().split(/\s+/).length > 100) {
