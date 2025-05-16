@@ -11,6 +11,7 @@ import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
 import BarLoader from '@/src/components/ui/barloader';
 import { Article } from '@/src/interface/article';
 import NewsDetails from '@/src/app/features/details/component/NewsDetails';
+import { fetchArticleByCategoryAndId } from '@/src/services/getArticles';
 
 export default function ArticleCategory() {
     const swiperRef = useRef<SwiperCore | null>(null);
@@ -27,22 +28,35 @@ export default function ArticleCategory() {
     };
 
     useEffect(() => {
-        if (!articles.length) router.push(`/${category}`);
-        const swipeStatus = localStorage.getItem("swipestatus") || null;
-        setSwipeStatus(swipeStatus)
-        setLoaded(true);
-        let articleId = null;
-        if (typeof id === 'string') {
-            articleId = id.split(/--?/).pop() || id.split(/-?/).pop();
+        async function initLoad() {
+            const swipeStatus = localStorage.getItem("swipestatus") || null;
+            setSwipeStatus(swipeStatus)
+            setLoaded(true);
+
+            if (!articles.length) {
+                // router.push(`/${category}`)
+                const result: { msg: Array<Article> | string, status: number } = await fetchArticleByCategoryAndId(category as string, new Date(), id as string);
+                if (result.status === 200 && result.msg?.length && typeof result.msg === 'object') {
+                    setNextArticles(result.msg)
+                }
+            } else {
+                let articleId = null;
+                if (typeof id === 'string') {
+                    articleId = id.split(/--?/).pop() || id.split(/-?/).pop();
+                }
+                const index = articles.findIndex(article => article.articleId === articleId);
+                if (index !== -1) {
+                    const clickedArticle = articles[index];
+                    const restArticle = [...articles.slice(0, index), ...articles.slice(index + 1)];
+                    const reorderArticle = [clickedArticle, ...restArticle];
+                    setNextArticles(reorderArticle);
+                }
+            }
+            setLoaded(false);
         }
-        const index = articles.findIndex(article => article.articleId === articleId);
-        if (index !== -1) {
-            const clickedArticle = articles[index];
-            const restArticle = [...articles.slice(0, index), ...articles.slice(index + 1)];
-            const reorderArticle = [clickedArticle, ...restArticle];
-            setNextArticles(reorderArticle);
-        }
-        setLoaded(false);
+
+        initLoad();
+
     }, [articles, category, id, router])
 
     return (<>

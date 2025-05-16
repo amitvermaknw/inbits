@@ -72,6 +72,10 @@ export async function GET(req: NextRequest) {
             new Map(articles.map(article => [article.articleId, article])).values()
         );
 
+        console.log(`category=${currentCategory}, currentDate=${currentDate}, start=${new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59, 59, 999
+        ).toISOString()}, end=${new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59, 59, 999
+        ).toISOString()} totalUniqueArticles=${uniqueArticles.length}`);
+
         return NextResponse.json({
             status: 200,
             msg: uniqueArticles

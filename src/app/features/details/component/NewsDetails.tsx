@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Article } from '@/src/interface/article';
 import { generateMetadata } from '@/src/lib/metadata';
 import { splitIntoChunks } from '@/src/utils/utils';
+import ShareButton from '@/src/components/share/ShareButton';
 
 
 interface ArticleDetails {
@@ -33,12 +34,18 @@ export default function NewsDetails({ articles }: ArticleDetails) {
                 />
             </div>
             <div className="flex-1 min-w-0 ms-2 mt-2">
+                <div className="flex justify-end me-2 mb-1">
+                    <ShareButton title={articles.title} url={`https://inbits.co/article/${articles.slug}`} />
+                </div>
                 <div className="text-gray-900 font-bold mb-2">{articles.summary?.title}</div>
+
             </div>
             <div className="flex-1 min-w-0 ms-2 mt-2">
                 <div className="text-gray-900 font-normal mb-2">{articles.summary?.summary}</div>
             </div>
-
+            {/* <div className="flex justify-end mt-2 me-2">
+                <ShareButton title={articles.title} url={`https://inbits.co/article/${articles.url}`} />
+            </div> */}
             <div className="flex-1 min-w-0 ms-2 mt-8 ">
                 <span className='text-sm text-gray-400'>Check detailed article: <a href={articles.url} target='_blank' >{articles.source.name}</a></span>
             </div>
