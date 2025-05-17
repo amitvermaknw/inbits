@@ -1,6 +1,8 @@
 import { PageLoader } from "@/src/components/ui/pageloader";
 import { Article } from "@/src/interface/article";
 import Image from 'next/image';
+import { DEFAULT_IMAGE } from "@/src/utils/contants";
+
 
 export default function MiddlePannel(props: { art: Array<Article> }) {
     return (
@@ -12,7 +14,7 @@ export default function MiddlePannel(props: { art: Array<Article> }) {
                         <a href={`/article/latest/${item.slug}`} className="items-center bg-white border-b border-gray-200 h-full">
                             <div className="flex-shrink-0">
                                 <Image
-                                    src={item.urlToImage}
+                                    src={item.urlToImage ? item.urlToImage : DEFAULT_IMAGE}
                                     alt={item.title}
                                     width={50}
                                     height={50}

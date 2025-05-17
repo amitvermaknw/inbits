@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { Article, ArticleProps } from "@/src/interface/article";
 import Image from "next/image";
+import { DEFAULT_IMAGE } from "@/src/utils/contants";
+
 
 const Banner = (props: ArticleProps) => {
 
@@ -66,7 +68,7 @@ const Banner = (props: ArticleProps) => {
                                 <div className="relative w-full h-64 md:h-96">
                                     <a href={`/article/latest/${item.slug}`} className="flex items-center bg-white border-b border-gray-200 h-full">
                                         <Image
-                                            src={item.urlToImage}
+                                            src={item.urlToImage ? item.urlToImage : DEFAULT_IMAGE}
                                             alt={item.title}
                                             width={60}
                                             height={50}
@@ -88,7 +90,7 @@ const Banner = (props: ArticleProps) => {
                 {techContent.map((item: Article, index: number) => <div key={index} className="relative w-full h-64 md:h-96">
                     <a href={`/article/latest/${item.slug}`} className="flex items-center bg-white border-b border-gray-200 h-full">
                         <Image
-                            src={item.urlToImage}
+                            src={item.urlToImage ? item.urlToImage : DEFAULT_IMAGE}
                             alt={item.title}
                             width={60}
                             height={50}

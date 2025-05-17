@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Card, CardContent, CardTitle } from "@/src/components/ui/card";
 import { PageLoader } from "@/src/components/ui/pageloader";
 // import { Button } from "@/src/components/ui/button";
+import { DEFAULT_IMAGE } from "@/src/utils/contants";
+
 
 interface NewsItem {
     title: string;
@@ -49,7 +51,7 @@ export default function LatestNews2() {
                         <CardContent className="flex items-center px-0">
                             <div className="flex-shrink-0 mr-4">
                                 <Image
-                                    src={item.imageUrl}
+                                    src={item.imageUrl ? item.imageUrl : DEFAULT_IMAGE}
                                     alt={item.imageAlt}
                                     width={56}
                                     height={56}

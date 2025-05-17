@@ -11,12 +11,12 @@ import BarLoader from '@/src/components/ui/barloader';
 import { Article } from '@/src/interface/article';
 import NewsDetails from '@/src/app/features/details/component/NewsDetails';
 import { fetchArticleByCategoryAndId } from '@/src/services/getArticles';
+import { PageLoader } from '@/src/components/ui/pageloader';
 
 const CategoryClient = ({ category, id }: { category: string, id: string }) => {
     const swiperRef = useRef<SwiperCore | null>(null);
     const [loader, setLoaded] = useState(false);
     const [swipeStatus, setSwipeStatus] = useState<string | null>(null);
-    // const { category, id } = useParams();
     const { articles } = useArticleContext();
     const [nextArticles, setNextArticles] = useState<Article[]>([]);
     const router = useRouter();
@@ -85,6 +85,7 @@ const CategoryClient = ({ category, id }: { category: string, id: string }) => {
                     ))}
                 </Swiper>
                 <BarLoader loading={loader} />
+                {loader && <PageLoader />}
                 {!swipeStatus && <div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-700 animate-bounce z-50 md:hidden">
                     <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />

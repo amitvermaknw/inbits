@@ -1,11 +1,13 @@
 import { Metadata } from "next";
 import { Article } from '@/src/interface/article';
-import { fetchArticleByCategoryAndId } from '@/src/services/getArticles';
+import { fetchArticleById } from '@/src/services/getArticles';
 import { APP_BASE_URL } from "@/src/utils/config";
 import CategoryClient from "./CategoryClient";
+import { OPENGRAPH_IMAGE } from "@/src/utils/contants";
 
 export async function generateMetadata({ params }: { params: { category: string; id: string } }): Promise<Metadata> {
-    const result: { msg: Array<Article> | string, status: number } = await fetchArticleByCategoryAndId(params.category as string, new Date(), params.id as string);
+    const paramsObj = await params;
+    const result: { msg: Array<Article> | string, status: number } = await fetchArticleById(paramsObj.id as string);
     return {
         title: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].title : 'Latest News',
         description: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].description : 'Stay updated with the latest news across various categories.',
@@ -15,7 +17,7 @@ export async function generateMetadata({ params }: { params: { category: string;
             siteName: 'InBits.co',
             type: 'article',
             images: [{
-                url: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].urlToImage : 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png',
+                url: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].urlToImage : OPENGRAPH_IMAGE,
                 width: 1200,
                 height: 630,
                 alt: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].title : 'Latest News',
@@ -27,11 +29,12 @@ export async function generateMetadata({ params }: { params: { category: string;
             card: "summary_large_image",
             title: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].title : `${params.category} latest news in 60 seconds`,
             description: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].description : `Stay updated with the latest news on ${params.category} in just 60 seconds`,
-            images: result.msg?.length && typeof result.msg === 'object' ? [result.msg[0].urlToImage] : 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png',
+            images: result.msg?.length && typeof result.msg === 'object' ? [result.msg[0].urlToImage] : OPENGRAPH_IMAGE,
         }
     };
 }
 
-export default function ArticleCategory({ params }: { params: { category: string; id: string } }) {
-    return (<CategoryClient category={params.category} id={params.id} />);
+export default async function ArticleCategory({ params }: { params: { category: string; id: string } }) {
+    const paramsObj = await params;
+    return (<CategoryClient category={paramsObj.category} id={paramsObj.id} />);
 }

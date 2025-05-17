@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
         const paramDate = searchParams.get("currentDate") as string;
         let currentCategory = searchParams.get("category") as string;
+        const articleId = searchParams.get("articleId") as string;
         const currentDate = new Date(paramDate);
         const articles: Array<Article> = [];
         let daysTried = 0;
@@ -72,13 +73,32 @@ export async function GET(req: NextRequest) {
             new Map(articles.map(article => [article.articleId, article])).values()
         );
 
-        console.log(`category=${currentCategory}, currentDate=${currentDate}, start=${new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59, 59, 999
-        ).toISOString()}, end=${new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 23, 59, 59, 999
-        ).toISOString()} totalUniqueArticles=${uniqueArticles.length}`);
+        const snapshot = await db.collection(docPath)
+            .where("summary.category", "==", currentCategory)
+            .where("articleId", "==", articleId).get();
+
+        const singleArticle = snapshot.docs.map(doc => ({ ...doc.data() } as Article));
+
+        const single = singleArticle[0];
+        let finalArticles: Article[];
+        if (!single) {
+            finalArticles = uniqueArticles;
+        } else {
+            const index = uniqueArticles.findIndex(article => article.articleId === single.articleId);
+            if (index !== -1) {
+                finalArticles = [
+                    uniqueArticles[index],
+                    ...uniqueArticles.slice(0, index),
+                    ...uniqueArticles.slice(index + 1),
+                ];
+            } else {
+                finalArticles = [single, ...uniqueArticles];
+            }
+        }
 
         return NextResponse.json({
             status: 200,
-            msg: uniqueArticles
+            msg: finalArticles
         });
 
     } catch (error) {

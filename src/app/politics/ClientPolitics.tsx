@@ -7,8 +7,7 @@ import { AlertCircle } from "lucide-react"
 import { useArticleContext } from "@/src/hooks/useArticleContext";
 import { useRouter } from "next/navigation";
 import { PageLoader } from "@/src/components/ui/pageloader";
-// import { generateMetadata } from "@/src/lib/metadata";
-// import { splitIntoChunks } from "@/src/utils/utils";
+import { DEFAULT_IMAGE } from "@/src/utils/contants";
 
 
 export default function ClientPolitics({ allArticles }: { allArticles: Article[] }) {
@@ -20,12 +19,6 @@ export default function ClientPolitics({ allArticles }: { allArticles: Article[]
         router.push(`/article/politics/${id}`);
     };
 
-    // generateMetadata({
-    //     title: allArticles[0].title,
-    //     summary: splitIntoChunks(allArticles[0].description),
-    //     image: allArticles[0].urlToImage
-    // });
-
     return (
         allArticles.length ? <section className="md:py-4">
             <h1 className="p-2 mb-2 text-left font-sans font-bold md:text-md xl:text-xl">Politics</h1>
@@ -35,7 +28,7 @@ export default function ClientPolitics({ allArticles }: { allArticles: Article[]
                         <a href="#" className="block w-full h-full" onClick={() => handleArticleClick(item.slug as string)}>
                             <div className="flex-shrink-0">
                                 <Image
-                                    src={item.urlToImage}
+                                    src={item.urlToImage ? item.urlToImage : DEFAULT_IMAGE}
                                     alt={item.title}
                                     width={50}
                                     height={50}

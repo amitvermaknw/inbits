@@ -1,16 +1,10 @@
 import Image from "next/image";
 import { Article } from "@/src/interface/article";
 import { PageLoader } from "@/src/components/ui/pageloader";
-import { generateMetadata } from "@/src/lib/metadata";
-import { splitIntoChunks } from "@/src/utils/utils";
+import { DEFAULT_IMAGE } from "@/src/utils/contants";
+
 
 export default function LatestNews(props: { art: Array<Article> }) {
-    generateMetadata({
-        title: props.art.length ? props.art[0].title : 'Best Daily News in 60 seconds',
-        summary: splitIntoChunks(props.art[0].description),
-        image: props.art[0].urlToImage,
-        url: props.art[0].url
-    });
 
     return (
         props.art.length ? <section className="py-4">
@@ -22,7 +16,7 @@ export default function LatestNews(props: { art: Array<Article> }) {
                             className="flex items-center bg-white border-b border-gray-200 h-full">
                             <div className="flex-shrink-0 ml-1 mb-2">
                                 <Image
-                                    src={item.urlToImage}
+                                    src={item.urlToImage ? item.urlToImage : DEFAULT_IMAGE}
                                     alt="Article image"
                                     width={60}
                                     height={50}

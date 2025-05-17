@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { OPENGRAPH_IMAGE } from "../utils/contants";
 
 export async function generateMetadata(article: {
     title: string,
@@ -19,19 +20,18 @@ export async function generateMetadata(article: {
             url: article?.url,
             images: [
                 {
-                    url: article.image || 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png',
+                    url: article.image || OPENGRAPH_IMAGE,
                     width: 1200,
                     height: 630,
                     alt: article.title,
                 },
             ],
-            //images: article?.image || 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png',
         },
         twitter: {
             card: 'summary_large_image',
             title: article?.title,
             description: article?.summary,
-            images: article.image || ['https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png'],
+            images: article.image || [OPENGRAPH_IMAGE],
         },
     };
 }

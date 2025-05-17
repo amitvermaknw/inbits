@@ -7,8 +7,7 @@ import { AlertCircle } from "lucide-react"
 import { useArticleContext } from "@/src/hooks/useArticleContext";
 import { useRouter } from "next/navigation";
 import { PageLoader } from "@/src/components/ui/pageloader";
-import { generateMetadata } from "@/src/lib/metadata";
-import { splitIntoChunks } from "@/src/utils/utils";
+import { DEFAULT_IMAGE } from "@/src/utils/contants";
 
 export default function ClientPage({ allArticles }: { allArticles: Article[] }) {
     const router = useRouter();
@@ -17,12 +16,6 @@ export default function ClientPage({ allArticles }: { allArticles: Article[] }) 
         setArticles(allArticles);
         router.push(`/article/technology/${id}`);
     };
-    generateMetadata({
-        title: allArticles[0].title,
-        summary: splitIntoChunks(allArticles[0].description),
-        image: allArticles[0].urlToImage,
-        url: allArticles[0].urlToImage
-    });
 
     return (
         allArticles.length ? <section className="md:py-4">
@@ -34,7 +27,7 @@ export default function ClientPage({ allArticles }: { allArticles: Article[] }) 
                             className="flex items-center bg-white border-b border-gray-200 h-full">
                             <div className="flex-shrink-0 ml-1 mb-2">
                                 <Image
-                                    src={item.urlToImage}
+                                    src={item.urlToImage ? item.urlToImage : DEFAULT_IMAGE}
                                     alt={item.title}
                                     width={60}
                                     height={50}

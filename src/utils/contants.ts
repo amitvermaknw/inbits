@@ -11,3 +11,6 @@ export const OTHERS = 'others';
 
 export const HOME_PAGE_RECORDS = 70;
 export const DATA_REVALIDATION = 3600;
+
+export const DEFAULT_IMAGE = 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747511547/inbits/tzdvfcsfn6cvpmfkfasq.png';
+export const OPENGRAPH_IMAGE = 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png'

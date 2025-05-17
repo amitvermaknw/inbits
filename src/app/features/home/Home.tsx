@@ -7,8 +7,42 @@ import { AlertCircle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle, } from "@/src/components/ui/alert"
 import { Article, ArticleProps } from "@/src/interface/article";
 import { HOME_PAGE_RECORDS } from "@/src/utils/contants";
-// import { generateMetadata } from "@/src/lib/metadata";
-// import { splitIntoChunks } from "@/src/utils/utils";
+import { OPENGRAPH_IMAGE } from "@/src/utils/contants";
+import { APP_BASE_URL } from "@/src/utils/config";
+import { Metadata } from "next";
+import { fetchArticleByCategory } from "@/src/services/getArticles";
+
+export async function generateMetadata(): Promise<Metadata> {
+    const result: { msg: Array<Article> | string, status: number } = await fetchArticleByCategory("politics", new Date());
+    const category = result.msg?.length && typeof result.msg === 'object' ? result.msg[0].summary?.category : 'Accross various categories';
+
+    console.log("category=", category);
+    return {
+        title: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].title : 'Latest News',
+        description: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].description : 'Stay updated with the latest news across various categories.',
+        openGraph: {
+            title: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].title : `${category} latest news in 60 seconds`,
+            description: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].description : `Stay updated with the latest news on ${category} in just 60 seconds`,
+            siteName: 'InBits.co',
+            type: 'article',
+            images: [{
+                url: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].urlToImage : OPENGRAPH_IMAGE,
+                width: 1200,
+                height: 630,
+                alt: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].title : 'Latest News',
+            }
+            ],
+            url: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].url : `${APP_BASE_URL}`,
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].title : `${category} latest news in 60 seconds`,
+            description: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].description : `Stay updated with the latest news on ${category} in just 60 seconds`,
+            images: result.msg?.length && typeof result.msg === 'object' ? [result.msg[0].urlToImage] : OPENGRAPH_IMAGE,
+        }
+    };
+}
+
 
 const getSideArticle = (props: ArticleProps): Array<Article> => {
     const sideArticle: Array<Article> = [];
@@ -86,14 +120,6 @@ const getLatestArticle = (props: ArticleProps): Array<Article> => {
             latestArticle.push(...validArticles);
         }
     }
-
-    // if (latestArticle.length) {
-    //     generateMetadata({
-    //         title: latestArticle[0].title,
-    //         summary: splitIntoChunks(latestArticle[0].description),
-    //         image: latestArticle[0].urlToImage
-    //     });
-    // }
     return latestArticle
 }
 

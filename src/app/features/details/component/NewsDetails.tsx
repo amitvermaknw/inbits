@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Article } from '@/src/interface/article';
 import ShareButton from '@/src/components/share/ShareButton';
 import { APP_BASE_URL } from '@/src/utils/config';
-
+import { DEFAULT_IMAGE } from "@/src/utils/contants";
 
 interface ArticleDetails {
     articles: Article,
@@ -17,7 +17,7 @@ export default function NewsDetails({ articles, urlType }: ArticleDetails) {
         <div className="col-span-1 m-auto min-h-full min-w-full  cursor-pointer overflow-hidden rounded-lg pb-2 shadow-lg transition-transform duration-200 hover:translate-y-2" key={`${articles.title}`}>
             <div className="flex-shrink-0 ml-1">
                 <Image
-                    src={articles.urlToImage}
+                    src={articles.urlToImage ? articles.urlToImage : DEFAULT_IMAGE}
                     alt="Article image"
                     width={50}
                     height={300}

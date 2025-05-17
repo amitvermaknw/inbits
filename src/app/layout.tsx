@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/src/components/layout/Header";
 import BottomNav from "@/src/components/nav/BottomNav";
 import ArticleProvider from "./features/context/ArticleContext";
+import { OPENGRAPH_IMAGE } from "../utils/contants";
 // import { generateMetadata } from "@/src/lib/metadata";
 
 
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png',
+        url: OPENGRAPH_IMAGE,
         width: 1200,
         height: 630,
         alt: 'InBits News Summary',
@@ -44,23 +45,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'InBits - Best Daily News in 60 seconds',
     description: 'Latest and breaking news across categories in 60 seconds.',
-    images: ['https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png'],
+    images: [OPENGRAPH_IMAGE],
   }
 };
-
-// ,
-// twitter: {
-//   card: 'summary_large_image',
-//     title: 'InBits - Best Daily News in 60 seconds',
-//       description: 'Latest and breaking news across categories in 60 seconds.',
-//         images: ['https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png'],
-//   },
-
-// generateMetadata({
-//   title: 'Best Daily News in 60 seconds',
-//   summary: 'Latest and breaking news across categories in 60 seconds.',
-//   image: 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747003467/inbits/ajpjmilvkxnthsedtetv.png'
-// });
 
 export default function RootLayout({
   children,
