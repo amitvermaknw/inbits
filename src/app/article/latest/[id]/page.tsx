@@ -5,7 +5,7 @@ import { APP_BASE_URL } from "@/src/utils/config";
 import LatestClient from "./LatestClient";
 import { OPENGRAPH_IMAGE } from "@/src/utils/contants";
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
     const paramsObj = await params;
     const result: { msg: Array<Article> | string, status: number } = await fetchArticleById(paramsObj.id as string);
     const category = result.msg?.length && typeof result.msg === 'object' ? result.msg[0].summary?.category : 'Accross various categories'
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     };
 }
 
-export default async function Details({ params }: { params: { id: string } }) {
+export default async function Details({ params }: { params: Promise<{ id: string }> }) {
     const paramsObj = await params;
     return (<LatestClient fetchWithArticleId={paramsObj.id} />)
 }
