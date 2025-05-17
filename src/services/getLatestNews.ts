@@ -1,0 +1,16 @@
+import { ArticleProps } from '../interface/article';
+import { APP_BASE_URL } from '../utils/config';
+import { DATA_REVALIDATION } from '../utils/contants';
+
+export const fetchLatestNews = async (callType: string, record: number): Promise<{ msg: ArticleProps | string, status: number }> => {
+    try {
+        const response = await fetch(`${APP_BASE_URL}/api/article/list/?callType=${callType}&record=${record}`, { next: { revalidate: DATA_REVALIDATION } });
+        const result: { msg: ArticleProps, status: number } = await response.json();
+        return result;
+    } catch (error) {
+        if (error instanceof Error) {
+            return { msg: error.message, status: 500 }
+        }
+        return { msg: "Error: Not able to fetch latest data", status: 500 }
+    }
+}

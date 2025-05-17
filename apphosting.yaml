@@ -1,0 +1,21 @@
+env:
+  - variable: NEWSAPI_API_KEY
+    secret: NEWSAPI_API_KEY
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: CRON_SECRET
+    secret: CRON_SECRET
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: OPENAI_API_KEY
+    secret: OPENAI_API_KEY
+    availability:
+      - BUILD
+      - RUNTIME
+
+runConfig:
+  cpu: 1
+  memoryMiB: 512
+  maxInstances: 5
