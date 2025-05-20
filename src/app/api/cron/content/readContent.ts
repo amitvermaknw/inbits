@@ -31,7 +31,7 @@ export async function fetchArticleContent(url: string): Promise<{ code: number, 
             };
 
             const dom = new JSDOM(html, { url });
-            dom.window.document.querySelectorAll('script, style, noscript').forEach(e => e.remove());
+            dom.window.document.querySelectorAll('script, style, noscript').forEach((e: Element) => e.remove());
 
             const reader = new Readability(dom.window.document);
             const article = reader.parse();
