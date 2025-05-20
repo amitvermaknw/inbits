@@ -73,6 +73,7 @@ const Banner = (props: ArticleProps) => {
                                             width={60}
                                             height={50}
                                             className="w-full h-full object-cover rounded-lg rounded-t-md rounded-b-md"
+                                            priority
                                         />
                                         <div className="absolute bottom-0 left-0 right-0 bg-black/80 text-white p-4 rounded-b-lg">
                                             <h2 className="text-lg font-semibold">{item.title}</h2>
@@ -95,6 +96,7 @@ const Banner = (props: ArticleProps) => {
                             width={60}
                             height={50}
                             className="w-full h-full object-cover rounded-lg rounded-t-lg rounded-b-lg"
+                            priority
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-black/20 text-white p-4 rounded-b-lg">
                             <h2 className="text-lg font-semibold">{item.title}</h2>

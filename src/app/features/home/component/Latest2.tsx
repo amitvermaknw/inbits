@@ -56,6 +56,7 @@ export default function LatestNews2() {
                                     width={56}
                                     height={56}
                                     className="rounded-lg w-20 h-22"
+                                    priority
                                 />
                             </div>
                             <div className="flex-1 min-w-0">

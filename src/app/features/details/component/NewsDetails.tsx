@@ -22,6 +22,7 @@ export default function NewsDetails({ articles, urlType }: ArticleDetails) {
                     width={50}
                     height={300}
                     className="object-cover rounded-t-lg rounded-b-lg h-64 w-full md:h-96"
+                    priority
                 />
             </div>
             <div className="flex-1 min-w-0 ms-2 mt-2">

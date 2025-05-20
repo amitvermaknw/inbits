@@ -33,6 +33,7 @@ export default function ClientPage({ allArticles }: { allArticles: Article[] }) 
                                     width={50}
                                     height={50}
                                     className="object-cover rounded-t-lg rounded-b-lg h-52 w-full md:h-72"
+                                    priority
                                 />
                             </div>
                             <div className="flex-1 min-w-0 p-2">

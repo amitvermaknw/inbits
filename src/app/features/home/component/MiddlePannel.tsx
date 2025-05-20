@@ -19,6 +19,7 @@ export default function MiddlePannel(props: { art: Array<Article> }) {
                                     width={50}
                                     height={50}
                                     className="object-cover rounded-t-lg rounded-b-lg h-35 max-h-40 w-full"
+                                    priority
                                 />
                             </div>
                             <div className="flex-1 min-w-0 ms-2 mt-2">

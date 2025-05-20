@@ -5,7 +5,8 @@ import Header from "@/src/components/layout/Header";
 import BottomNav from "@/src/components/nav/BottomNav";
 import ArticleProvider from "./features/context/ArticleContext";
 import { OPENGRAPH_IMAGE } from "../utils/contants";
-// import { generateMetadata } from "@/src/lib/metadata";
+import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from "next/script";
 
 
 const geistSans = Geist({
@@ -56,6 +57,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="0uyC7jbyzhW4qmnuphkvFA"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -67,6 +75,7 @@ export default function RootLayout({
           <BottomNav />
         </ArticleProvider>
       </body>
+      <GoogleAnalytics gaId="G-EWT72BRKH0" />
     </html>
   );
 }
