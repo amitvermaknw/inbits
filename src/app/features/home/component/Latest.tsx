@@ -21,6 +21,7 @@ export default function LatestNews(props: { art: Array<Article> }) {
                                     width={60}
                                     height={50}
                                     className="object-cover rounded-t-lg rounded-b-lg w-25 h-20"
+                                    priority
                                 />
                             </div>
                             <div className="flex-1 min-w-0 ms-2 p-2">
