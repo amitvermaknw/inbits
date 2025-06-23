@@ -27,7 +27,7 @@ export default function NewsDetails({ articles, urlType }: ArticleDetails) {
             </div>
             <div className="flex-1 min-w-0 ms-2 mt-2">
                 <div className="flex justify-end me-2 mb-1">
-                    <ShareButton title={articles.title} url={`${APP_BASE_URL}/article/${urlType}/${articles.slug}`} />
+                    <ShareButton title={articles.summary?.title as string} url={`${APP_BASE_URL}/article/${urlType}/${articles.slug}`} />
                 </div>
                 <div className="text-gray-900 font-bold mb-2">{articles.summary?.title}</div>
 

@@ -31,6 +31,9 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
             title: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].title : `${category} latest news in 60 seconds`,
             description: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].description : `Stay updated with the latest news on ${category} in just 60 seconds`,
             images: result.msg?.length && typeof result.msg === 'object' ? [result.msg[0].urlToImage] : OPENGRAPH_IMAGE,
+        },
+        alternates: {
+            canonical: result.msg?.length && typeof result.msg === 'object' ? result.msg[0].url : `${APP_BASE_URL}/${category}`
         }
     };
 }
