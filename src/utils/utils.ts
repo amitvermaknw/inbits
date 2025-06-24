@@ -23,3 +23,8 @@ export const slugId = () => {
     const uuId = nanoidNoHyphen();
     return uuId;
 }
+
+
+export const isValidImageUrl = (url: string | undefined): boolean => {
+    return typeof url === 'string' && url.startsWith('https://');
+};

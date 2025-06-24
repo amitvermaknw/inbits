@@ -17,7 +17,7 @@ const ShareButton = ({ title, url }: { title: string; url: string }) => {
                     url,
                 });
             } else {
-                await navigator.clipboard.writeText(url);
+                await navigator.clipboard.writeText(`${title}\n${url}`);
                 alert("Link copied to clipboard!");
             }
         } catch (err) {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { QuerySnapshot, DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
 import { db } from "../../config/firebaseAdmin";
 import { Article } from "../../../../interface/article";
+import { isValidImageUrl } from "@/src/utils/utils";
 
 const docPath = "inbits_collection/us/articles";
 let lastVisibleData: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined;
@@ -11,7 +12,7 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
         const records = Number(searchParams.get("record") || 40);
         const callType = searchParams.get("callType");
-
+        debugger;
         let query: QuerySnapshot<DocumentData, DocumentData> | undefined = undefined;
 
         if (callType == 'start') {
@@ -40,7 +41,7 @@ export async function GET(req: NextRequest) {
             const documentData = doc.data();
             documentData['documentId'] = doc.id;
 
-            if (documentData["summary"].hasOwnProperty("category")) {
+            if (documentData["summary"].hasOwnProperty("category") && isValidImageUrl(documentData["urlToImage"])) {
                 if (documentData["summary"]["category"].toLowerCase() === 'politics') {
                     politics.push(documentData as Article)
                 } else if (documentData["summary"]["category"].toLowerCase() === 'sports') {

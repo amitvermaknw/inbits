@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import { Article } from "@/src/interface/article";
 import { fetchArticleById, fetchArticlesForCategoryAndDate } from './helper';
+import { isValidImageUrl } from '@/src/utils/utils';
 
-const MAX_DAYS_BACK = 20;
+const MAX_DAYS_BACK = 5;
 const MAX_ARTICLES = 10;
+let totalDaysBack = 0;
 
 export async function POST(request: Request) {
     try {
@@ -14,13 +16,13 @@ export async function POST(request: Request) {
         let nextCategoryIndex = currentCategoryIndex;
         let isComplete = false;
         const seenIds = new Set(excludeIds);
-        let totalDaysBack = 0;
+
         let nextSelectedCategory = selectedCategory;
         console.log(slug);
 
         const addArticles = (articles: Article[]) => {
             for (const article of articles) {
-                if (!seenIds.has(article.articleId)) {
+                if (!seenIds.has(article.articleId) && isValidImageUrl(article.urlToImage)) {
                     seenIds.add(article.articleId);
                     finalArticles.push(article);
                     if (finalArticles.length >= MAX_ARTICLES) return true;
@@ -31,7 +33,7 @@ export async function POST(request: Request) {
 
         if (articleId) {
             const mainArticle = await fetchArticleById(articleId);
-            if (mainArticle && mainArticle.length && !seenIds.has(mainArticle[0].articleId)) {
+            if (mainArticle && mainArticle.length && !seenIds.has(mainArticle[0].articleId) && isValidImageUrl(mainArticle[0].urlToImage)) {
                 finalArticles.push(mainArticle[0]);
                 seenIds.add(mainArticle[0].articleId);
                 nextSelectedCategory = mainArticle[0].summary?.category;
