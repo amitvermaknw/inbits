@@ -64,7 +64,10 @@ export async function POST(request: Request) {
 
         if (totalDaysBack > MAX_DAYS_BACK || finalArticles.length < MAX_ARTICLES) {
             isComplete = true;
+            totalDaysBack = 0;
         }
+
+        console.log("totalDaysBack=", totalDaysBack)
 
         return NextResponse.json({
             status: 200,
