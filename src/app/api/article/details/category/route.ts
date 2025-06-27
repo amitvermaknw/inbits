@@ -67,8 +67,6 @@ export async function POST(request: Request) {
             totalDaysBack = 0;
         }
 
-        console.log("totalDaysBack=", totalDaysBack)
-
         return NextResponse.json({
             status: 200,
             msg: {
