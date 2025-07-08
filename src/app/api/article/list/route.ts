@@ -12,7 +12,6 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
         const records = Number(searchParams.get("record") || 40);
         const callType = searchParams.get("callType");
-        debugger;
         let query: QuerySnapshot<DocumentData, DocumentData> | undefined = undefined;
 
         if (callType == 'start') {

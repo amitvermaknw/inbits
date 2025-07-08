@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "../../config/firebaseAdmin";
 import { Article } from "@/src/interface/article";
 import { DocumentSnapshot } from "firebase-admin/firestore";
+import { SUB_PAGE_RECORDS } from "@/src/utils/contants";
 
 const docPath = "inbits_collection/us/articles";
-const pageSize = 30;
 let lastVisible: DocumentSnapshot | null = null;
 
 export async function GET(req: NextRequest) {
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
         let daysTried = 0;
         const maxDaysBack = 20;
 
-        while (articles.length < pageSize && daysTried < maxDaysBack) {
+        while (articles.length < SUB_PAGE_RECORDS && daysTried < maxDaysBack) {
             const start = new Date(
                 currentDate.getFullYear(),
                 currentDate.getMonth(),
@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
                 .where("publishedAt", ">=", start)
                 .where("publishedAt", "<=", end)
                 .orderBy("publishedAt", "desc")
-                .limit(pageSize)
+                .limit(SUB_PAGE_RECORDS)
 
             if (lastVisible) {
                 query = query.startAfter(lastVisible);
@@ -55,20 +55,18 @@ export async function GET(req: NextRequest) {
 
             const snapshot = await query.get();
             lastVisible = snapshot.docs[snapshot.docs.length - 1] ?? null;
-
             const result = snapshot.docs.map(doc => ({ ...doc.data() } as Article));
 
             if (result.length) {
                 articles.push(...result);
             }
 
-            if (snapshot.size < (pageSize - articles.length)) {
+            if (snapshot.size < (SUB_PAGE_RECORDS - articles.length)) {
                 currentDate.setDate(currentDate.getDate() - 1);
                 lastVisible = null;
                 daysTried++;
             }
         }
-
         const uniqueArticles = Array.from(
             new Map(articles.map(article => [article.articleId, article])).values()
         );
