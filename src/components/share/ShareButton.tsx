@@ -11,18 +11,18 @@ const ShareButton = ({ title, url }: { title: string; url: string }) => {
 
         setIsSharing(true);
         try {
-            if (navigator.share) {
+            if (typeof navigator.share === "function") {
                 await navigator.share({
-                    title,
-                    url,
+                    url: url,
+                    title: title
                 });
             } else {
-                await navigator.clipboard.writeText(url);
-                alert("Link copied to clipboard!");
+                await navigator.clipboard.writeText(`${title}\n${url}`);
+                // alert("Link copied to clipboard!");
             }
         } catch (err) {
             if (err instanceof Error)
-                console.error("Share failed:");
+                console.info("Not copied/shared url");
         } finally {
             setIsSharing(false);
         }

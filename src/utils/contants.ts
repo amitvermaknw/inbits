@@ -9,7 +9,8 @@ export const SCIENCE = 'science';
 export const WORLD = 'world';
 export const OTHERS = 'others';
 
-export const HOME_PAGE_RECORDS = 70;
+export const HOME_PAGE_RECORDS = 100;
+export const SUB_PAGE_RECORDS = 80;
 export const DATA_REVALIDATION = 3600;
 
 export const DEFAULT_IMAGE = 'https://res.cloudinary.com/dxhnwasub/image/upload/v1747511547/inbits/tzdvfcsfn6cvpmfkfasq.png';

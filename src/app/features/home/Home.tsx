@@ -82,42 +82,48 @@ const getLatestArticle = (props: ArticleProps): Array<Article> => {
 
     if (typeof props === 'object' && props.hasOwnProperty("politics")) {
         if (Array.isArray(props.politics)) {
-            const validArticles = props.politics.slice(4, props.politics.length).filter(Boolean); //4
-            latestArticle.push(...validArticles);
+            //const validArticles = props.politics.slice(4, props.politics.length).filter(Boolean); //4
+            // latestArticle.push(...validArticles);
+            latestArticle.push(...props.politics);
         }
     }
     if (typeof props === 'object' && props.hasOwnProperty("sports")) {
         if (Array.isArray(props.sports)) {
-            const validArticles = props.sports.slice(3, props.sports.length).filter(Boolean); //3
-            latestArticle.push(...validArticles);
+            // const validArticles = props.sports.slice(3, props.sports.length).filter(Boolean); //3
+            // latestArticle.push(...validArticles);
+            latestArticle.push(...props.sports);
         }
     }
 
     if (typeof props === 'object' && props.hasOwnProperty("entertainment")) {
         if (Array.isArray(props.entertainment)) {
-            const validArticles = props.entertainment.slice(2, props.entertainment.length).filter(Boolean); //2
-            latestArticle.push(...validArticles);
+            // const validArticles = props.entertainment.slice(2, props.entertainment.length).filter(Boolean); //2
+            // latestArticle.push(...validArticles);
+            latestArticle.push(...props.entertainment);
         }
     }
 
-    if (typeof props === 'object' && props.hasOwnProperty("technology")) {
-        if (Array.isArray(props.technology)) {
-            const validArticles = props.technology.slice(1, props.technology.length).filter(Boolean);
-            latestArticle.push(...validArticles);
-        }
-    }
+    // if (typeof props === 'object' && props.hasOwnProperty("technology")) {
+    //     if (Array.isArray(props.technology)) {
+    //         // const validArticles = props.technology.slice(1, props.technology.length).filter(Boolean);
+    //         // latestArticle.push(...validArticles);
+    //         latestArticle.push(...props.technology);
+    //     }
+    // }
 
     if (typeof props === 'object' && props.hasOwnProperty("business")) {
         if (Array.isArray(props.business)) {
-            const validArticles = props.business.slice(1, props.business.length).filter(Boolean);
-            latestArticle.push(...validArticles);
+            // const validArticles = props.business.slice(1, props.business.length).filter(Boolean);
+            // latestArticle.push(...validArticles);
+            latestArticle.push(...props.business);
         }
     }
 
     if (typeof props === 'object' && props.hasOwnProperty("world")) {
         if (Array.isArray(props.world)) {
-            const validArticles = props.world.slice(0, props.world.length).filter(Boolean);
-            latestArticle.push(...validArticles);
+            // const validArticles = props.world.slice(0, props.world.length).filter(Boolean);
+            // latestArticle.push(...validArticles);
+            latestArticle.push(...props.world);
         }
     }
     return latestArticle

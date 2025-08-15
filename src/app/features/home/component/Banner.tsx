@@ -17,7 +17,7 @@ const Banner = (props: ArticleProps) => {
     useEffect(() => {
         if (typeof props === 'object' && props.hasOwnProperty("politics")) {
             if (Array.isArray(props.politics)) {
-                const validArticles = props.politics.slice(0, 4).filter(Boolean);
+                const validArticles = props.politics.slice(0, 9).filter(Boolean);
                 getContent(prev => [...prev, ...validArticles]);
             }
         }
@@ -76,7 +76,7 @@ const Banner = (props: ArticleProps) => {
                                             priority
                                         />
                                         <div className="absolute bottom-0 left-0 right-0 bg-black/80 text-white p-4 rounded-b-lg">
-                                            <h2 className="text-lg font-semibold">{item.title}</h2>
+                                            <h2 className="text-lg font-semibold">{item.title.replace(/-\s*[^-]*$/, ".").replace(/\s+\./, ".")}</h2>
                                         </div>
                                     </a>
                                 </div>
@@ -99,7 +99,7 @@ const Banner = (props: ArticleProps) => {
                             priority
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-black/20 text-white p-4 rounded-b-lg">
-                            <h2 className="text-lg font-semibold">{item.title}</h2>
+                            <h2 className="text-lg font-semibold">{item.title.replace(/-\s*[^-]*$/, ".").replace(/\s+\./, ".")}</h2>
                         </div>
                     </a>
                 </div>

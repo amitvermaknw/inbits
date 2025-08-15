@@ -11,7 +11,7 @@ import { POLITICS, SPORTS, TECHNOLOGY, WORLD, ENTERTAINMENT, BUSINESS, HEALTH, S
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from "swiper";
 import { Mousewheel, Navigation } from 'swiper/modules';
-import BarLoader from '@/src/components/ui/barloader';
+// import BarLoader from '@/src/components/ui/barloader';
 import { PageLoader } from '@/src/components/ui/pageloader';
 import { useCallback } from 'react';
 
@@ -121,7 +121,7 @@ const LatestClient = ({ fetchWithArticleId }: { fetchWithArticleId: string }) =>
                         </SwiperSlide>
                     ))}
                 </Swiper>
-                <BarLoader loading={loader} />
+                {/* <BarLoader loading={loader} /> */}
                 {loader && <PageLoader />}
                 {!swipeStatus && <div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gray-700 animate-bounce z-50 md:hidden">
                     <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
